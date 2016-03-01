@@ -172,7 +172,7 @@ class GraphView: NSView {
         }
     }
     
-    var roundedCorners = false {
+    var roundedCorners = true {
         didSet {
             gradientBackground.cornerRadius    = roundedCorners ? Constants.CornerRadius : 0.0
             lineView.layer?.cornerRadius       = roundedCorners ? Constants.CornerRadius : 0.0
