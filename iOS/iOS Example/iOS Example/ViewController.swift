@@ -120,7 +120,7 @@ class ViewController: UIViewController {
         
         scrollView.contentSize = CGSize(width: scrollView.bounds.width, height: currentY + graphHeight)
         
-        let updater = CADisplayLink(target: self, selector: #selector(update))
+        let updater = CADisplayLink(target: self, selector: Selector("update"))
         updater.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         updater.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: UITrackingRunLoopMode) // Makes sure update is called while scrolling
     }
