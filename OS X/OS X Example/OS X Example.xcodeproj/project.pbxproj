@@ -1,0 +1,293 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9A2555C81C8384AD00951A57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2555C71C8384AD00951A57 /* AppDelegate.swift */; };
+		9A2555CA1C8384AD00951A57 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2555C91C8384AD00951A57 /* ViewController.swift */; };
+		9A2555CC1C8384AD00951A57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A2555CB1C8384AD00951A57 /* Assets.xcassets */; };
+		9A2555D91C8385BB00951A57 /* MOONGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2555D81C8385BB00951A57 /* MOONGraphView.swift */; };
+		9A2555DD1C8386F400951A57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A2555DC1C8386F400951A57 /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9A2555C41C8384AD00951A57 /* OS X Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OS X Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A2555C71C8384AD00951A57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9A2555C91C8384AD00951A57 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9A2555CB1C8384AD00951A57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9A2555D01C8384AD00951A57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9A2555D81C8385BB00951A57 /* MOONGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOONGraphView.swift; sourceTree = "<group>"; };
+		9A2555DB1C8386F400951A57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9A2555C11C8384AD00951A57 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9A2555BB1C8384AD00951A57 = {
+			isa = PBXGroup;
+			children = (
+				9A2555C61C8384AD00951A57 /* OS X Example */,
+				9A2555C51C8384AD00951A57 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9A2555C51C8384AD00951A57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A2555C41C8384AD00951A57 /* OS X Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9A2555C61C8384AD00951A57 /* OS X Example */ = {
+			isa = PBXGroup;
+			children = (
+				9A2555C91C8384AD00951A57 /* ViewController.swift */,
+				9A2555D81C8385BB00951A57 /* MOONGraphView.swift */,
+				9A2555DC1C8386F400951A57 /* Main.storyboard */,
+				9A2555DA1C83864D00951A57 /* Supporting Files */,
+			);
+			path = "OS X Example";
+			sourceTree = "<group>";
+		};
+		9A2555DA1C83864D00951A57 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9A2555C71C8384AD00951A57 /* AppDelegate.swift */,
+				9A2555CB1C8384AD00951A57 /* Assets.xcassets */,
+				9A2555D01C8384AD00951A57 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9A2555C31C8384AD00951A57 /* OS X Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A2555D31C8384AD00951A57 /* Build configuration list for PBXNativeTarget "OS X Example" */;
+			buildPhases = (
+				9A2555C01C8384AD00951A57 /* Sources */,
+				9A2555C11C8384AD00951A57 /* Frameworks */,
+				9A2555C21C8384AD00951A57 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OS X Example";
+			productName = "OS X Example";
+			productReference = 9A2555C41C8384AD00951A57 /* OS X Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9A2555BC1C8384AD00951A57 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "MOON Wearables";
+				TargetAttributes = {
+					9A2555C31C8384AD00951A57 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 9A2555BF1C8384AD00951A57 /* Build configuration list for PBXProject "OS X Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9A2555BB1C8384AD00951A57;
+			productRefGroup = 9A2555C51C8384AD00951A57 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9A2555C31C8384AD00951A57 /* OS X Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9A2555C21C8384AD00951A57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A2555CC1C8384AD00951A57 /* Assets.xcassets in Resources */,
+				9A2555DD1C8386F400951A57 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9A2555C01C8384AD00951A57 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A2555CA1C8384AD00951A57 /* ViewController.swift in Sources */,
+				9A2555C81C8384AD00951A57 /* AppDelegate.swift in Sources */,
+				9A2555D91C8385BB00951A57 /* MOONGraphView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9A2555DC1C8386F400951A57 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9A2555DB1C8386F400951A57 /* Base */,
+			);
+			name = Main.storyboard;
+			path = "../../../../../../MOON Wearables/Apps/My Apps/Mac/MOON Flash/MOON Flash";
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9A2555D11C8384AD00951A57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9A2555D21C8384AD00951A57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9A2555D41C8384AD00951A57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "OS X Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.moonwearables.OS-X-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9A2555D51C8384AD00951A57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "OS X Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.moonwearables.OS-X-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9A2555BF1C8384AD00951A57 /* Build configuration list for PBXProject "OS X Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A2555D11C8384AD00951A57 /* Debug */,
+				9A2555D21C8384AD00951A57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9A2555D31C8384AD00951A57 /* Build configuration list for PBXNativeTarget "OS X Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A2555D41C8384AD00951A57 /* Debug */,
+				9A2555D51C8384AD00951A57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9A2555BC1C8384AD00951A57 /* Project object */;
+}
