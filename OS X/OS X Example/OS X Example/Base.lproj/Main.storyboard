@@ -673,23 +673,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kdC-FZ-TXn" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
-                                <rect key="frame" x="20" y="849" width="560" height="131"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="kdC-FZ-TXn" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
+                                <rect key="frame" x="20" y="850" width="560" height="130"/>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="T3Y-fA-hSC" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
-                                <rect key="frame" x="20" y="296" width="560" height="130"/>
+                                <rect key="frame" x="20" y="297" width="560" height="130"/>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="hBm-tT-hEF" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
-                                <rect key="frame" x="20" y="572" width="560" height="131"/>
+                                <rect key="frame" x="20" y="573" width="560" height="130"/>
                             </customView>
-                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yp9-Bu-TL9" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
-                                <rect key="frame" x="20" y="711" width="560" height="130"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Yp9-Bu-TL9" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
+                                <rect key="frame" x="20" y="711" width="560" height="131"/>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="ksg-uo-FVm" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
-                                <rect key="frame" x="20" y="434" width="560" height="130"/>
+                                <rect key="frame" x="20" y="435" width="560" height="130"/>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="ed4-uR-nLk" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
-                                <rect key="frame" x="20" y="158" width="560" height="130"/>
+                                <rect key="frame" x="20" y="158" width="560" height="131"/>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="W5J-by-E9U" customClass="GraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="560" height="130"/>
