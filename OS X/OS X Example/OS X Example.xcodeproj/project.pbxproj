@@ -11,7 +11,7 @@
 		9A2555CA1C8384AD00951A57 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2555C91C8384AD00951A57 /* ViewController.swift */; };
 		9A2555CC1C8384AD00951A57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A2555CB1C8384AD00951A57 /* Assets.xcassets */; };
 		9A2555D91C8385BB00951A57 /* MOONGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2555D81C8385BB00951A57 /* MOONGraphView.swift */; };
-		9A2555DD1C8386F400951A57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A2555DC1C8386F400951A57 /* Main.storyboard */; };
+		9AC405831C862EB7006B02D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AC405811C862EB7006B02D4 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,7 +21,7 @@
 		9A2555CB1C8384AD00951A57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A2555D01C8384AD00951A57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A2555D81C8385BB00951A57 /* MOONGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOONGraphView.swift; sourceTree = "<group>"; };
-		9A2555DB1C8386F400951A57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9AC405821C862EB7006B02D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 			children = (
 				9A2555C91C8384AD00951A57 /* ViewController.swift */,
 				9A2555D81C8385BB00951A57 /* MOONGraphView.swift */,
-				9A2555DC1C8386F400951A57 /* Main.storyboard */,
+				9AC405811C862EB7006B02D4 /* Main.storyboard */,
 				9A2555DA1C83864D00951A57 /* Supporting Files */,
 			);
 			path = "OS X Example";
@@ -131,7 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A2555CC1C8384AD00951A57 /* Assets.xcassets in Resources */,
-				9A2555DD1C8386F400951A57 /* Main.storyboard in Resources */,
+				9AC405831C862EB7006B02D4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,13 +151,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9A2555DC1C8386F400951A57 /* Main.storyboard */ = {
+		9AC405811C862EB7006B02D4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9A2555DB1C8386F400951A57 /* Base */,
+				9AC405821C862EB7006B02D4 /* Base */,
 			);
 			name = Main.storyboard;
-			path = "../../../../../../MOON Wearables/Apps/My Apps/Mac/MOON Flash/MOON Flash";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -286,6 +285,7 @@
 				9A2555D51C8384AD00951A57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
