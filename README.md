@@ -6,10 +6,9 @@ MOON Graph is a very simple graph library for both iOS and OS X that lets you ve
 ### Screenshot
 ![Image](http://imgur.com/IqvFYXW.png)
 
-### OS X
+### GIFs
 ![Image](http://imgur.com/Juab1Yd.gif)
 
-### iOS
 ![Image](http://imgur.com/nYbrtOH.gif)
 
 ## API
