@@ -9,7 +9,7 @@
         <!--View Controller-->
         <scene sceneID="C3G-pu-gDG">
             <objects>
-                <viewController id="wV9-hU-NkI" customClass="ViewController" customModule="MOON_Graph" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wV9-hU-NkI" customClass="ViewController" customModule="iOS_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gO1-53-OBF"/>
                         <viewControllerLayoutGuide type="bottom" id="zwF-I0-KgC"/>

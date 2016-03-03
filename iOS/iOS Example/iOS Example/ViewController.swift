@@ -36,9 +36,10 @@ class ViewController: UIViewController {
         let graph1 = MOONGraphView(frame: CGRect(x: 0.0, y: currentY, width: scrollView.bounds.width, height: graphHeight))
         graph1.themeColor = .Gray
         graph1.maxSamples = 50
-        graph1.graphDirection = .RightToLeft
         graph1.title = "Dates"
         graph1.subTitle = "λ = 690nm"
+        graph1.graphDirection = .LeftToRight
+        graph1.roundedCorners = false
         scrollView.addSubview(graph1)
         graphs.append(graph1)
         
@@ -51,7 +52,7 @@ class ViewController: UIViewController {
         graph2.minValue   = -4.0
         graph2.title      = "Orange"
         graph2.subTitle   = "λ = 590nm"
-        graph2.graphDirection = .RightToLeft
+        graph2.roundedCorners = false
         scrollView.addSubview(graph2)
         graphs.append(graph2)
         
@@ -62,9 +63,9 @@ class ViewController: UIViewController {
         graph3.maxSamples = 200
         graph3.maxValue   = 2.0
         graph3.minValue   = -2.0
-        graph3.graphDirection = .RightToLeft
         graph3.title = "Kiwi"
         graph3.subTitle = "λ = 530nm"
+        graph3.roundedCorners = false
         scrollView.addSubview(graph3)
         graphs.append(graph3)
         
@@ -77,7 +78,7 @@ class ViewController: UIViewController {
         graph4.maxSamples = 1000
         graph4.title = "Blueberry"
         graph4.subTitle = "λ = 460nm"
-        graph4.graphDirection = .RightToLeft
+        graph4.roundedCorners = false
         scrollView.addSubview(graph4)
         graphs.append(graph4)
         
@@ -88,9 +89,9 @@ class ViewController: UIViewController {
         graph5.maxSamples = 280
         graph5.maxValue = 6.0
         graph5.minValue = -6.0
-        graph5.graphDirection = .RightToLeft
         graph5.title = "Blue Grapes"
         graph5.subTitle = "λ = 480nm"
+        graph5.roundedCorners = false
         scrollView.addSubview(graph5)
         graphs.append(graph5)
         
@@ -98,12 +99,12 @@ class ViewController: UIViewController {
         
         let graph6 = MOONGraphView(frame: CGRect(x: 0.0, y: currentY, width: scrollView.bounds.width, height: graphHeight))
         graph6.themeColor = .Yellow
-        graph6.maxSamples = 250
+        graph6.maxSamples = 300
         graph6.maxValue   = 2.0
         graph6.title = "Lemon"
         graph6.subTitle = "λ = 575nm"
-        graph6.graphDirection = .RightToLeft
         graph6.numberOfGraphs = 3
+        graph6.roundedCorners = false
         scrollView.addSubview(graph6)
         graphs.append(graph6)
         
@@ -111,10 +112,10 @@ class ViewController: UIViewController {
         
         let graph7 = MOONGraphView(frame: CGRect(x: 0.0, y: currentY, width: scrollView.bounds.width, height: graphHeight))
         graph7.themeColor = .Purple
-        graph7.graphDirection = .RightToLeft
         graph7.title = "Aubergine"
         graph7.subTitle = "λ = 430nm"
         graph7.numberOfGraphs = 3
+        graph7.roundedCorners = false
         scrollView.addSubview(graph7)
         graphs.append(graph7)
         
@@ -137,7 +138,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     func squareForI(input: Double) -> Double {
         return (1...15).filter({$0 % 2 != 0}).reduce(0.0, combine: {$0 + sin(input * Double($1))})
     }
@@ -146,17 +146,16 @@ class ViewController: UIViewController {
         return (1...15).reduce(0.0, combine: {$0 + sin(input * Double($1))})
     }
     
-    
     func update() {
-        let value = sin(i)
+        let sineValue = sin(i)
         
-        graphs[0].addSamples(value)
-        graphs[1].addSamples(self.triangleForI(self.i))
-        graphs[2].addSamples(value + sin(self.i * 5) / 3.0)
-        graphs[3].addSamples(value)
-        graphs[4].addSamples(self.squareForI(self.i))
-        graphs[5].addSamples(sin(self.i * 19) / 2.0 + sin(self.i * 21) / 2.0, cos(self.i), cos(self.i + M_PI))
-        graphs[6].addSamples(value, sin(self.i + 2 * M_PI / 3), sin(self.i + 4 * M_PI / 3))
+        graphs[0].addSamples(sineValue)
+        graphs[1].addSamples(triangleForI(i))
+        graphs[2].addSamples(sineValue + sin(i * 5) / 3.0)
+        graphs[3].addSamples(sineValue)
+        graphs[4].addSamples(squareForI(i))
+        graphs[5].addSamples(sin(i * 19) / 2.0 + sin(i * 21) / 2.0, cos(i), cos(i + M_PI))
+        graphs[6].addSamples(sineValue, sin(i + 2 * M_PI / 3), sin(i + 4 * M_PI / 3))
         
         self.i += 0.1
     }
