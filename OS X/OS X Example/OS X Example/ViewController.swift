@@ -40,56 +40,55 @@ class ViewController: NSViewController {
         view.layer?.backgroundColor = NSColor.whiteColor().CGColor
         
         graph1.themeColor = .Gray
-        graph1.maxSamples = 50
-        graph1.graphDirection = .RightToLeft
         graph1.title = "Dates"
         graph1.subTitle = "λ = 690nm"
+        graph1.maxSamples = 50
         
         graph2.themeColor = .Orange
+        graph2.title = "Orange"
+        graph2.subTitle = "λ = 590nm"
+        graph2.graphDirection = .LeftToRight
         graph2.maxSamples = 500
         graph2.maxValue   = 8.0
         graph2.minValue   = -8.0
-        graph2.title = "Orange"
-        graph2.subTitle = "λ = 590nm"
-        graph2.graphDirection = .RightToLeft
         
         graph3.themeColor = .Green
-        graph3.maxSamples = 200
-        graph3.maxValue   = 2.0
-        graph3.minValue   = -2.0
-        graph3.graphDirection = .RightToLeft
         graph3.title = "Kiwi"
         graph3.subTitle = "λ = 530nm"
+        graph3.graphDirection = .LeftToRight
+        graph3.maxSamples = 400
+        graph3.maxValue   = 2.0
+        graph3.minValue   = -2.0
         
-        graph4.themeColor = .Blue
-        graph4.maxValue   = 5.0
-        graph4.minValue   = -1.1
-        graph4.maxSamples = 1000
-        graph4.title = "Blueberry"
-        graph4.subTitle = "λ = 460nm"
-        graph4.graphDirection = .RightToLeft
+        graph4.themeColor = .Yellow
+        graph4.title = "Lemon"
+        graph4.subTitle = "λ = 575nm"
+        graph4.roundedCorners = false
+        graph4.maxSamples = 400
+        graph4.maxValue   = 2.0
+        graph4.numberOfGraphs = 3
         
-        graph5.themeColor = .Turquoise
-        graph5.maxSamples = 400
-        graph5.maxValue = 6.0
-        graph5.minValue = -6.0
-        graph5.graphDirection = .RightToLeft
-        graph5.title = "Blue Grapes"
-        graph5.subTitle = "λ = 480nm"
+        graph5.themeColor = .Purple
+        graph5.title = "Aubergine"
+        graph5.subTitle = "λ = 430nm"
+        graph5.roundedCorners = false
+        graph5.maxSamples = 300
+        graph5.numberOfGraphs = 3
         
-        graph6.themeColor = .Yellow
-        graph6.maxSamples = 250
-        graph6.maxValue   = 2.0
-        graph6.title = "Lemon"
-        graph6.subTitle = "λ = 575nm"
-        graph6.graphDirection = .RightToLeft
-        graph6.numberOfGraphs = 3
+        graph6.themeColor = .Blue
+        graph6.title = "Blueberry"
+        graph6.subTitle = "λ = 460nm"
+        graph6.maxSamples = 1000
+        graph6.maxValue   = 5.0
+        graph6.minValue   = -1.1
         
-        graph7.themeColor = .Purple
-        graph7.graphDirection = .RightToLeft
-        graph7.title = "Aubergine"
-        graph7.subTitle = "λ = 430nm"
-        graph7.numberOfGraphs = 3
+        graph7.themeColor = .Turquoise
+        graph7.title = "Blue Grapes"
+        graph7.subTitle = "λ = 480nm"
+        graph7.maxSamples = 400
+        graph7.maxValue = 6.0
+        graph7.minValue = -6.0
+        
         
         func displayLinkOutputCallback(
             displayLink: CVDisplayLink,
@@ -124,10 +123,10 @@ class ViewController: NSViewController {
             self.graph1.addSamples(value)
             self.graph2.addSamples(self.triangleForI(self.i))
             self.graph3.addSamples(value + sin(self.i * 5) / 3.0)
-            self.graph4.addSamples(value)
-            self.graph5.addSamples(self.squareForI(self.i))
-            self.graph6.addSamples(sin(self.i * 19) / 2.0 + sin(self.i * 21) / 2.0, cos(self.i), cos(self.i + M_PI))
-            self.graph7.addSamples(value, sin(self.i + 2 * M_PI / 3), sin(self.i + 4 * M_PI / 3))
+            self.graph6.addSamples(value)
+            self.graph7.addSamples(self.squareForI(self.i))
+            self.graph4.addSamples(sin(self.i * 19) / 2.0 + sin(self.i * 21) / 2.0, cos(self.i), cos(self.i + M_PI))
+            self.graph5.addSamples(value, sin(self.i + 2 * M_PI / 3), sin(self.i + 4 * M_PI / 3))
             
             self.i += 0.1
         }

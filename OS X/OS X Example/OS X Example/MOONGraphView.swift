@@ -77,8 +77,8 @@ private struct Constants {
 class GraphView: NSView {
     
     private let gradientBackground = CAGradientLayer()
-    private var lineView: LineView!
-    private var accessoryView: AccessoryView!
+    private var lineView: LineView?
+    private var accessoryView: AccessoryView!?
     
     
     // -------------------------------
@@ -99,23 +99,22 @@ class GraphView: NSView {
         gradientBackground.removeAllAnimations()
         layer.addSublayer(gradientBackground)
         
-        accessoryView = AccessoryView(frame: bounds)
-        accessoryView.title = title
-        accessoryView.subTitle = subTitle
-        accessoryView.maxValue = maxValue
-        accessoryView.minValue = minValue
-        accessoryView.graphDirection = graphDirection
-        accessoryView.layer?.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
-        addSubview(accessoryView)
-        
         lineView = LineView(frame: bounds)
-        lineView.maxSamples = maxSamples
-        lineView.maxValue = maxValue
-        lineView.minValue = minValue
-        lineView.graphDirection = graphDirection
-        lineView.numberOfGraphs = numberOfGraphs
-        lineView.layer?.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
-        addSubview(lineView)
+        lineView!.maxSamples = maxSamples
+        lineView!.maxValue = maxValue
+        lineView!.minValue = minValue
+        lineView!.graphDirection = graphDirection
+        lineView!.numberOfGraphs = numberOfGraphs
+        lineView!.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
+        addSubview(lineView!)
+        
+        accessoryView = AccessoryView(frame: bounds)
+        accessoryView!.title = title
+        accessoryView!.subTitle = subTitle
+        accessoryView!.maxValue = maxValue
+        accessoryView!.minValue = minValue
+        accessoryView!.graphDirection = graphDirection
+        addSubview(accessoryView!)
     }
     
     
@@ -188,8 +187,7 @@ class GraphView: NSView {
     var roundedCorners = true {
         didSet {
             gradientBackground.cornerRadius    = roundedCorners ? Constants.CornerRadius : 0.0
-            lineView.layer?.cornerRadius       = roundedCorners ? Constants.CornerRadius : 0.0
-            accessoryView.layer?.cornerRadius  = roundedCorners ? Constants.CornerRadius : 0.0
+            lineView?.cornerRadius             = roundedCorners ? Constants.CornerRadius : 0.0
         }
     }
     
@@ -229,12 +227,28 @@ private class LineView: NSView {
     var maxSamples = 0                              { didSet { setNeedsDisplayInRect(bounds) } }
     var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
     var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
+    var cornerRadius = Constants.CornerRadius       { didSet { layer?.cornerRadius = cornerRadius } }
     var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplayInRect(bounds) } }
     var numberOfGraphs = 1 {
         didSet {
             sampleArrays = [[Double]](count: numberOfGraphs, repeatedValue: [Double]())
             setNeedsDisplayInRect(bounds)
         }
+    }
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
+        wantsLayer = true
+        layer?.cornerRadius = cornerRadius
     }
     
     func addSamples(newSamples: [Double]) {
