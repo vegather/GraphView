@@ -26,7 +26,7 @@ Specifies which way the graph will go. This is an enum with two possible options
 This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Orange`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Orange`.
 
 ##### var maxSamples = 150
-This sets how many samples will fit within the view. E.g., if you set this to 200, what you will see in the view is the last 200 samples. You can't set it to any lower than 2 (for obvious reasons). The default value of this is 150.
+This sets how many samples will fit within the view. E.g., if you set this to 200, what you will see in the view is the last 200 samples. You can't set it to any lower than 2. The default value of this is 150.
 
 ##### var maxValue: CGFloat = 1.0
 Determines what the maximum expected value is. It is used as an upper limit for the view. The default is 1.0.
@@ -50,7 +50,7 @@ Removes all the samples you've added to the graph. All the other properties like
 ## Todo
 - Have an auto-scale feature
 - Change the size of the labels when the view gets too small.
-- I'm pretty sure there's a different way of doing this that will make it faster.
+- I'm pretty sure there's a different way of doing this that will make it faster. Will probably end up drawing into a bunch of tall, skinny CALayers, and then moving them sideways.
 
 ## Contact
 - [@vegather on Twitter](http://www.twitter.com/vegather)
