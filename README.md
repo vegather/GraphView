@@ -44,6 +44,9 @@ Use this to make the corners rounded or square. The default is true, meaning rou
 ##### func addSamples(newSamples: Double...)
 This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
 
+##### func reset()
+Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `maxSamples` etc are kept the same. Useful if you want to reuse the same graph view.
+
 ## Todo
 - Have an auto-scale feature
 - Change the size of the labels when the view gets too small.

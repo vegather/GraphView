@@ -196,6 +196,11 @@ class GraphView: NSView {
         lineView?.addSamples(newSamples)
     }
     
+    /// Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `maxSamples` etc are kept the same. Useful if you want to reuse the same graph view.
+    func reset() {
+        lineView?.reset()
+    }
+    
     
     
     
@@ -262,6 +267,11 @@ private class LineView: NSView {
             sampleArrays[index].append(newSamples[index])
         }
         
+        setNeedsDisplayInRect(bounds)
+    }
+    
+    func reset() {
+        sampleArrays = [[Double]()]
         setNeedsDisplayInRect(bounds)
     }
     

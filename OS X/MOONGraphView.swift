@@ -77,8 +77,8 @@ private struct Constants {
 class GraphView: NSView {
     
     private let gradientBackground = CAGradientLayer()
-    private var lineView: LineView!
-    private var accessoryView: AccessoryView!
+    private var lineView: LineView?
+    private var accessoryView: AccessoryView!?
     
     
     // -------------------------------
@@ -99,23 +99,22 @@ class GraphView: NSView {
         gradientBackground.removeAllAnimations()
         layer.addSublayer(gradientBackground)
         
-        accessoryView = AccessoryView(frame: bounds)
-        accessoryView.title = title
-        accessoryView.subTitle = subTitle
-        accessoryView.maxValue = maxValue
-        accessoryView.minValue = minValue
-        accessoryView.graphDirection = graphDirection
-        accessoryView.layer?.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
-        addSubview(accessoryView)
-        
         lineView = LineView(frame: bounds)
-        lineView.maxSamples = maxSamples
-        lineView.maxValue = maxValue
-        lineView.minValue = minValue
-        lineView.graphDirection = graphDirection
-        lineView.numberOfGraphs = numberOfGraphs
-        lineView.layer?.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
-        addSubview(lineView)
+        lineView!.maxSamples = maxSamples
+        lineView!.maxValue = maxValue
+        lineView!.minValue = minValue
+        lineView!.graphDirection = graphDirection
+        lineView!.numberOfGraphs = numberOfGraphs
+        lineView!.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
+        addSubview(lineView!)
+        
+        accessoryView = AccessoryView(frame: bounds)
+        accessoryView!.title = title
+        accessoryView!.subTitle = subTitle
+        accessoryView!.maxValue = maxValue
+        accessoryView!.minValue = minValue
+        accessoryView!.graphDirection = graphDirection
+        addSubview(accessoryView!)
     }
     
     
@@ -188,14 +187,18 @@ class GraphView: NSView {
     var roundedCorners = true {
         didSet {
             gradientBackground.cornerRadius    = roundedCorners ? Constants.CornerRadius : 0.0
-            lineView.layer?.cornerRadius       = roundedCorners ? Constants.CornerRadius : 0.0
-            accessoryView.layer?.cornerRadius  = roundedCorners ? Constants.CornerRadius : 0.0
+            lineView?.cornerRadius             = roundedCorners ? Constants.CornerRadius : 0.0
         }
     }
     
     /// This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
     func addSamples(newSamples: Double...) {
         lineView?.addSamples(newSamples)
+    }
+    
+    /// Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `maxSamples` etc are kept the same. Useful if you want to reuse the same graph view.
+    func reset() {
+        lineView?.reset()
     }
     
     
@@ -229,12 +232,28 @@ private class LineView: NSView {
     var maxSamples = 0                              { didSet { setNeedsDisplayInRect(bounds) } }
     var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
     var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
+    var cornerRadius = Constants.CornerRadius       { didSet { layer?.cornerRadius = cornerRadius } }
     var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplayInRect(bounds) } }
     var numberOfGraphs = 1 {
         didSet {
             sampleArrays = [[Double]](count: numberOfGraphs, repeatedValue: [Double]())
             setNeedsDisplayInRect(bounds)
         }
+    }
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
+        wantsLayer = true
+        layer?.cornerRadius = cornerRadius
     }
     
     func addSamples(newSamples: [Double]) {
@@ -248,6 +267,11 @@ private class LineView: NSView {
             sampleArrays[index].append(newSamples[index])
         }
         
+        setNeedsDisplayInRect(bounds)
+    }
+    
+    func reset() {
+        sampleArrays = [[Double]()]
         setNeedsDisplayInRect(bounds)
     }
     
