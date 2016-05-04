@@ -20,65 +20,75 @@
 
 import Cocoa
 
-enum GraphColor {
-    case Gray
-    case Orange
-    case Green
-    case Blue
-    case Turquoise
-    case Yellow
-    case Purple
-    
-    private func colors() -> [CGColorRef] {
-        switch self {
-        case Gray:
-            return [NSColor(red: 141.0/255.0, green: 140.0/255.0, blue: 146.0/255.0, alpha: 1.0).CGColor,
-                    NSColor(red: 210.0/255.0, green: 209.0/255.0, blue: 215.0/255.0, alpha: 1.0).CGColor]
-        case .Orange:
-            return [NSColor(red: 253.0/255.0, green:  58.0/255.0, blue: 52.0/255.0,  alpha: 1.0).CGColor,
-                    NSColor(red: 255.0/255.0, green: 148.0/255.0, blue: 86.0/255.0,  alpha: 1.0).CGColor]
-        case .Green:
-            return [NSColor(red: 28.0/255.0,  green: 180.0/255.0, blue: 28.0/255.0,  alpha: 1.0).CGColor,
-                    NSColor(red: 78.0/255.0,  green: 238.0/255.0, blue: 92.0/255.0,  alpha: 1.0).CGColor]
-        case .Blue:
-            return [NSColor(red:  0.0/255.0,  green: 108.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor,
-                    NSColor(red: 90.0/255.0,  green: 202.0/255.0, blue: 251.0/255.0, alpha: 1.0).CGColor]
-        case .Turquoise:
-            return [NSColor(red: 54.0/255.0,  green: 174.0/255.0, blue: 220.0/255.0, alpha: 1.0).CGColor,
-                    NSColor(red: 82.0/255.0,  green: 234.0/255.0, blue: 208.0/255.0, alpha: 1.0).CGColor]
-        case .Yellow:
-            return [NSColor(red: 255.0/255.0, green: 160.0/255.0, blue: 33.0/255.0,  alpha: 1.0).CGColor,
-                    NSColor(red: 254.0/255.0, green: 209.0/255.0, blue: 48.0/255.0,  alpha: 1.0).CGColor]
-        case .Purple:
-            return [NSColor(red: 140.0/255.0, green:  70.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor,
-                    NSColor(red: 217.0/255.0, green: 168.0/255.0, blue: 252.0/255.0, alpha: 1.0).CGColor]
-        }
-    }
-}
-
-enum GraphDirection {
-    case LeftToRight
-    case RightToLeft
-}
-
 private struct Constants {
     static let FontName = "HelveticaNeue"
-    static let GraphSeparatorLineMargin: CGFloat = 70.0
-    static let TickMargin: CGFloat = 15.0
-    static let TickWidth: CGFloat = 10.0
-    static let Alpha: CGFloat = 0.6
-    static let CornerRadius: CGFloat = 10.0
-    static let GraphWidth: CGFloat = 2.0
+    static let ValueLabelWidth    : CGFloat = 70.0
+    static let TickMargin         : CGFloat = 15.0
+    static let TickWidth          : CGFloat = 10.0
+    static let Alpha              : CGFloat = 0.6
+    static let CornerRadius       : CGFloat = 10.0
+    static let GraphWidth         : CGFloat = 2.0
+    static let ScatterPointRadius : CGFloat = 4.0
 }
 
 
 
 
-class GraphView: NSView {
+class MOONGraphView: NSView {
+    
+    enum GraphColor {
+        case Gray
+        case Red
+        case Green
+        case Blue
+        case Turquoise
+        case Yellow
+        case Purple
+        
+        private func colors() -> [CGColorRef] {
+            switch self {
+            case Gray:
+                return [NSColor(red: 141.0/255.0, green: 140.0/255.0, blue: 146.0/255.0, alpha: 1.0).CGColor,
+                        NSColor(red: 210.0/255.0, green: 209.0/255.0, blue: 215.0/255.0, alpha: 1.0).CGColor]
+            case .Red:
+                return [NSColor(red: 253.0/255.0, green:  58.0/255.0, blue: 52.0/255.0,  alpha: 1.0).CGColor,
+                        NSColor(red: 255.0/255.0, green: 148.0/255.0, blue: 86.0/255.0,  alpha: 1.0).CGColor]
+            case .Green:
+                return [NSColor(red: 28.0/255.0,  green: 180.0/255.0, blue: 28.0/255.0,  alpha: 1.0).CGColor,
+                        NSColor(red: 78.0/255.0,  green: 238.0/255.0, blue: 92.0/255.0,  alpha: 1.0).CGColor]
+            case .Blue:
+                return [NSColor(red:  0.0/255.0,  green: 108.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor,
+                        NSColor(red: 90.0/255.0,  green: 202.0/255.0, blue: 251.0/255.0, alpha: 1.0).CGColor]
+            case .Turquoise:
+                return [NSColor(red: 54.0/255.0,  green: 174.0/255.0, blue: 220.0/255.0, alpha: 1.0).CGColor,
+                        NSColor(red: 82.0/255.0,  green: 234.0/255.0, blue: 208.0/255.0, alpha: 1.0).CGColor]
+            case .Yellow:
+                return [NSColor(red: 255.0/255.0, green: 160.0/255.0, blue: 33.0/255.0,  alpha: 1.0).CGColor,
+                        NSColor(red: 254.0/255.0, green: 209.0/255.0, blue: 48.0/255.0,  alpha: 1.0).CGColor]
+            case .Purple:
+                return [NSColor(red: 140.0/255.0, green:  70.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor,
+                        NSColor(red: 217.0/255.0, green: 168.0/255.0, blue: 252.0/255.0, alpha: 1.0).CGColor]
+            }
+        }
+    }
+    
+    enum GraphDirection {
+        case LeftToRight
+        case RightToLeft
+    }
+    
+    enum GraphType {
+        case Line
+        case Scatter
+    }
+    
+    
     
     private let gradientBackground = CAGradientLayer()
     private var lineView: LineView?
-    private var accessoryView: AccessoryView!?
+    private var accessoryView: AccessoryView?
+    
+    
     
     
     // -------------------------------
@@ -87,10 +97,10 @@ class GraphView: NSView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         wantsLayer = true
         guard let layer = layer else { return }
-        
+
         NSBezierPath.setDefaultLineWidth(Constants.GraphWidth)
         
         gradientBackground.frame = layer.bounds
@@ -106,6 +116,7 @@ class GraphView: NSView {
         lineView!.graphDirection = graphDirection
         lineView!.numberOfGraphs = numberOfGraphs
         lineView!.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
+        lineView!.graphType = graphType
         addSubview(lineView!)
         
         accessoryView = AccessoryView(frame: bounds)
@@ -146,8 +157,8 @@ class GraphView: NSView {
         }
     }
     
-    /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Orange`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Orange`.
-    var themeColor = GraphColor.Orange {
+    /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Red`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Red`.
+    var themeColor = GraphColor.Red {
         didSet {
             gradientBackground.colors = themeColor.colors()
         }
@@ -191,6 +202,13 @@ class GraphView: NSView {
         }
     }
     
+    /// Changes how the samples are drawn. The current options are .Line and .Scatter. The default is .Line
+    var graphType = GraphType.Line {
+        didSet {
+            lineView?.graphType = graphType
+        }
+    }
+    
     /// This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
     func addSamples(newSamples: Double...) {
         lineView?.addSamples(newSamples)
@@ -229,17 +247,47 @@ private class LineView: NSView {
     
     private var sampleArrays = [[Double]]()
     
-    var maxSamples = 0                              { didSet { setNeedsDisplayInRect(bounds) } }
-    var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
-    var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
-    var cornerRadius = Constants.CornerRadius       { didSet { layer?.cornerRadius = cornerRadius } }
-    var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplayInRect(bounds) } }
+    
+    // -------------------------------
+    // MARK: Properties
+    // -------------------------------
+    
+    var maxSamples = 0 {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var maxValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var minValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var cornerRadius = Constants.CornerRadius {
+        didSet { layer?.cornerRadius = cornerRadius }
+    }
+    
+    var graphType = MOONGraphView.GraphType.Line {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var graphDirection = MOONGraphView.GraphDirection.LeftToRight {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
     var numberOfGraphs = 1 {
         didSet {
             sampleArrays = [[Double]](count: numberOfGraphs, repeatedValue: [Double]())
             setNeedsDisplayInRect(bounds)
         }
     }
+    
+    
+    
+    // -------------------------------
+    // MARK: Initialization
+    // -------------------------------
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -255,6 +303,12 @@ private class LineView: NSView {
         wantsLayer = true
         layer?.cornerRadius = cornerRadius
     }
+    
+    
+    
+    // -------------------------------
+    // MARK: Methods
+    // -------------------------------
     
     func addSamples(newSamples: [Double]) {
         guard newSamples.count == sampleArrays.count else { return }
@@ -283,41 +337,53 @@ private class LineView: NSView {
     // -------------------------------
     
     override func drawRect(dirtyRect: NSRect) {
-        NSColor(white: 1.0, alpha: Constants.Alpha).setStroke()
+        NSColor(white: 1.0, alpha: Constants.Alpha).set() // Sets both stroke and fill
         drawGraph()
     }
     
     private func drawGraph() {
-        let widthPerSample = (bounds.width - Constants.GraphSeparatorLineMargin) / CGFloat(maxSamples - 1)
+        let widthPerSample = (bounds.width - Constants.ValueLabelWidth) / CGFloat(maxSamples - 1)
         let pointsToSampleValueRatio = (bounds.height - Constants.TickMargin * 2) / (maxValue - minValue)
         
         let progress = CGFloat(sampleArrays[0].count - 1) / CGFloat(maxSamples)
-        let window = bounds.width - Constants.GraphSeparatorLineMargin
+        let window = bounds.width - Constants.ValueLabelWidth
         
         for samples in sampleArrays {
             var currentXValue: CGFloat
             switch graphDirection {
                 case .RightToLeft: currentXValue = (progress - 1.0) * -1.0 * window
-                case .LeftToRight: currentXValue = progress * window + Constants.GraphSeparatorLineMargin
+                case .LeftToRight: currentXValue = progress * window + Constants.ValueLabelWidth
             }
             
             for (index, sample) in samples.enumerate() {
                 guard index > 0 else { continue } // Skip the first one
                 
-                let x1: CGFloat
-                switch graphDirection {
-                    case .RightToLeft: x1 = currentXValue - widthPerSample
-                    case .LeftToRight: x1 = currentXValue + widthPerSample
-                }
-                let x2: CGFloat = currentXValue
-                
-                let y1: CGFloat = (CGFloat(samples[index - 1]) - minValue) * pointsToSampleValueRatio + Constants.TickMargin
-                let y2: CGFloat = (CGFloat(sample) - minValue) * pointsToSampleValueRatio + Constants.TickMargin
-                
+                let x1: CGFloat = currentXValue
+                let y1: CGFloat = (CGFloat(sample) - minValue) * pointsToSampleValueRatio + Constants.TickMargin
                 let point1 = NSPoint(x: x1, y: y1)
-                let point2 = NSPoint(x: x2, y: y2)
                 
-                NSBezierPath.strokeLineFromPoint(point1, toPoint: point2)
+                switch graphType {
+                    case .Line:
+                        var x2 = currentXValue
+                        switch graphDirection {
+                            case .RightToLeft: x2 -= widthPerSample
+                            case .LeftToRight: x2 += widthPerSample
+                        }
+                        
+                        let y2: CGFloat = (CGFloat(samples[index - 1]) - minValue) * pointsToSampleValueRatio + Constants.TickMargin
+                        let point2 = NSPoint(x: x2, y: y2)
+                        
+                        NSBezierPath.strokeLineFromPoint(point1, toPoint: point2)
+                    
+                    case .Scatter:
+                        NSBezierPath(ovalInRect: NSRect(
+                            x: x1 - Constants.ScatterPointRadius / 2.0,
+                            y: y1 - Constants.ScatterPointRadius / 2.0,
+                            width:  Constants.ScatterPointRadius,
+                            height: Constants.ScatterPointRadius
+                            )
+                        ).fill()
+                }
                 
                 switch graphDirection {
                     case .RightToLeft: currentXValue += widthPerSample
@@ -326,17 +392,42 @@ private class LineView: NSView {
             }
         }
     }
-    
+        
+        
 }
+
+
+
+
+
 
 
 private class AccessoryView: NSView {
     
-    var title = ""                                  { didSet { setNeedsDisplayInRect(bounds) } }
-    var subTitle = ""                               { didSet { setNeedsDisplayInRect(bounds) } }
-    var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
-    var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplayInRect(bounds) } }
-    var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplayInRect(bounds) } }
+    
+    // -------------------------------
+    // MARK: Properties
+    // -------------------------------
+    
+    var title = "" {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var subTitle = "" {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var maxValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var minValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
+    
+    var graphDirection = MOONGraphView.GraphDirection.LeftToRight {
+        didSet { setNeedsDisplayInRect(bounds) }
+    }
     
     
     
@@ -358,14 +449,14 @@ private class AccessoryView: NSView {
         
         switch graphDirection {
         case .RightToLeft:
-            fill.moveToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: 0.0))
+            fill.moveToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: 0.0))
             fill.lineToPoint(NSPoint(x: bounds.width, y: 0.0))
             fill.lineToPoint(NSPoint(x: bounds.width, y: bounds.height))
-            fill.lineToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: bounds.height))
+            fill.lineToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: bounds.height))
         case .LeftToRight:
             fill.moveToPoint(NSPoint(x: 0.0, y: 0.0))
-            fill.lineToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: 0.0))
-            fill.lineToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: bounds.height))
+            fill.lineToPoint(NSPoint(x: Constants.ValueLabelWidth, y: 0.0))
+            fill.lineToPoint(NSPoint(x: Constants.ValueLabelWidth, y: bounds.height))
             fill.lineToPoint(NSPoint(x: 0.0, y: bounds.height))
         }
         
@@ -378,11 +469,11 @@ private class AccessoryView: NSView {
         
         switch graphDirection {
         case .RightToLeft:
-            separatorLine.moveToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: 0.0))
-            separatorLine.lineToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: bounds.height))
+            separatorLine.moveToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: 0.0))
+            separatorLine.lineToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: bounds.height))
         case .LeftToRight:
-            separatorLine.moveToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: 0.0))
-            separatorLine.lineToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: bounds.height))
+            separatorLine.moveToPoint(NSPoint(x: Constants.ValueLabelWidth, y: 0.0))
+            separatorLine.lineToPoint(NSPoint(x: Constants.ValueLabelWidth, y: bounds.height))
         }
         
         NSColor(white: 1.0, alpha: Constants.Alpha).setStroke()
@@ -397,23 +488,23 @@ private class AccessoryView: NSView {
         
         switch graphDirection {
         case .RightToLeft:
-            tick1.moveToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: Constants.TickMargin))
-            tick1.lineToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin + Constants.TickWidth, y: Constants.TickMargin))
+            tick1.moveToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: Constants.TickMargin))
+            tick1.lineToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth + Constants.TickWidth, y: Constants.TickMargin))
             
-            tick2.moveToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: bounds.height / 2.0))
-            tick2.lineToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin + Constants.TickWidth / 2.0, y: bounds.height / 2.0))
+            tick2.moveToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: bounds.height / 2.0))
+            tick2.lineToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth + Constants.TickWidth / 2.0, y: bounds.height / 2.0))
             
-            tick3.moveToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin, y: bounds.height - Constants.TickMargin))
-            tick3.lineToPoint(NSPoint(x: bounds.width - Constants.GraphSeparatorLineMargin + Constants.TickWidth, y: bounds.height - Constants.TickMargin))
+            tick3.moveToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth, y: bounds.height - Constants.TickMargin))
+            tick3.lineToPoint(NSPoint(x: bounds.width - Constants.ValueLabelWidth + Constants.TickWidth, y: bounds.height - Constants.TickMargin))
         case .LeftToRight:
-            tick1.moveToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: Constants.TickMargin))
-            tick1.lineToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin - Constants.TickWidth, y: Constants.TickMargin))
+            tick1.moveToPoint(NSPoint(x: Constants.ValueLabelWidth, y: Constants.TickMargin))
+            tick1.lineToPoint(NSPoint(x: Constants.ValueLabelWidth - Constants.TickWidth, y: Constants.TickMargin))
             
-            tick2.moveToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: bounds.height / 2.0))
-            tick2.lineToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin - Constants.TickWidth / 2.0, y: bounds.height / 2.0))
+            tick2.moveToPoint(NSPoint(x: Constants.ValueLabelWidth, y: bounds.height / 2.0))
+            tick2.lineToPoint(NSPoint(x: Constants.ValueLabelWidth - Constants.TickWidth / 2.0, y: bounds.height / 2.0))
             
-            tick3.moveToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin, y: bounds.height - Constants.TickMargin))
-            tick3.lineToPoint(NSPoint(x: Constants.GraphSeparatorLineMargin - Constants.TickWidth, y: bounds.height - Constants.TickMargin))
+            tick3.moveToPoint(NSPoint(x: Constants.ValueLabelWidth, y: bounds.height - Constants.TickMargin))
+            tick3.lineToPoint(NSPoint(x: Constants.ValueLabelWidth - Constants.TickWidth, y: bounds.height - Constants.TickMargin))
         }
         
         NSColor(white: 1.0, alpha: Constants.Alpha).setStroke()
@@ -439,7 +530,7 @@ private class AccessoryView: NSView {
         
         switch graphDirection {
         case .RightToLeft:
-            let x = bounds.width - Constants.GraphSeparatorLineMargin + Constants.TickWidth + 5.0
+            let x = bounds.width - Constants.ValueLabelWidth + Constants.TickWidth + 5.0
             label1.drawInRect(NSRect(
                 x       : x,
                 y       : Constants.TickMargin - (label1.size().height / 2.0) + alignmentCoefficient,
@@ -459,7 +550,7 @@ private class AccessoryView: NSView {
                 height  : label3.size().height)
             )
         case .LeftToRight:
-            let x = Constants.GraphSeparatorLineMargin - Constants.TickWidth - 5.0
+            let x = Constants.ValueLabelWidth - Constants.TickWidth - 5.0
             label1.drawInRect(NSRect(
                 x       : x - label1.size().width,
                 y       : Constants.TickMargin - (label1.size().height / 2.0) + alignmentCoefficient,
