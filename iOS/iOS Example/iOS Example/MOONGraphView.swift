@@ -20,62 +20,73 @@
 
 import UIKit
 
-enum GraphColor {
-    case Gray
-    case Orange
-    case Green
-    case Blue
-    case Turquoise
-    case Yellow
-    case Purple
-    
-    private func colors() -> [CGColorRef] {
-        switch self {
-        case Gray:
-            return [UIColor(red: 210.0/255.0, green: 209.0/255.0, blue: 215.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red: 141.0/255.0, green: 140.0/255.0, blue: 146.0/255.0, alpha: 1.0).CGColor]
-        case .Orange:
-            return [UIColor(red: 255.0/255.0, green: 148.0/255.0, blue:  86.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red: 253.0/255.0, green:  58.0/255.0, blue:  52.0/255.0, alpha: 1.0).CGColor]
-        case .Green:
-            return [UIColor(red:  78.0/255.0, green: 238.0/255.0, blue:  92.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red:  28.0/255.0, green: 180.0/255.0, blue:  28.0/255.0, alpha: 1.0).CGColor]
-        case .Blue:
-            return [UIColor(red:  90.0/255.0, green: 202.0/255.0, blue: 251.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red:   0.0/255.0, green: 108.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor]
-        case .Turquoise:
-            return [UIColor(red:  82.0/255.0, green: 234.0/255.0, blue: 208.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red:  54.0/255.0, green: 174.0/255.0, blue: 220.0/255.0, alpha: 1.0).CGColor]
-        case .Yellow:
-            return [UIColor(red: 254.0/255.0, green: 209.0/255.0, blue:  48.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red: 255.0/255.0, green: 160.0/255.0, blue:  33.0/255.0, alpha: 1.0).CGColor]
-        case .Purple:
-            return [UIColor(red: 217.0/255.0, green: 168.0/255.0, blue: 252.0/255.0, alpha: 1.0).CGColor,
-                    UIColor(red: 140.0/255.0, green:  70.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor]
-        }
-    }
-}
-
-enum GraphDirection {
-    case LeftToRight
-    case RightToLeft
-}
-
 private struct Constants {
     static let FontName = "HelveticaNeue"
-    static let ValueLabelWidth: CGFloat = 70.0
-    static let TickMargin     : CGFloat = 15.0
-    static let TickWidth      : CGFloat = 10.0
-    static let Alpha          : CGFloat = 0.6
-    static let CornerRadius   : CGFloat = 10.0
-    static let GraphWidth     : CGFloat = 2.0
+    static let ValueLabelWidth    : CGFloat = 70.0
+    static let TickMargin         : CGFloat = 15.0
+    static let TickWidth          : CGFloat = 10.0
+    static let Alpha              : CGFloat = 0.6
+    static let CornerRadius       : CGFloat = 10.0
+    static let GraphLineWidth     : CGFloat = 2.0
+    static let ScatterPointRadius : CGFloat = 2.0
 }
+
+
 
 class MOONGraphView: UIView {
 
+    enum GraphColor {
+        case Gray
+        case Red
+        case Green
+        case Blue
+        case Turquoise
+        case Yellow
+        case Purple
+        
+        private func colors() -> [CGColorRef] {
+            switch self {
+            case Gray:
+                return [UIColor(red: 210.0/255.0, green: 209.0/255.0, blue: 215.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red: 141.0/255.0, green: 140.0/255.0, blue: 146.0/255.0, alpha: 1.0).CGColor]
+            case .Red:
+                return [UIColor(red: 255.0/255.0, green: 148.0/255.0, blue:  86.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red: 253.0/255.0, green:  58.0/255.0, blue:  52.0/255.0, alpha: 1.0).CGColor]
+            case .Green:
+                return [UIColor(red:  78.0/255.0, green: 238.0/255.0, blue:  92.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red:  28.0/255.0, green: 180.0/255.0, blue:  28.0/255.0, alpha: 1.0).CGColor]
+            case .Blue:
+                return [UIColor(red:  90.0/255.0, green: 202.0/255.0, blue: 251.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red:   0.0/255.0, green: 108.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor]
+            case .Turquoise:
+                return [UIColor(red:  82.0/255.0, green: 234.0/255.0, blue: 208.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red:  54.0/255.0, green: 174.0/255.0, blue: 220.0/255.0, alpha: 1.0).CGColor]
+            case .Yellow:
+                return [UIColor(red: 254.0/255.0, green: 209.0/255.0, blue:  48.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red: 255.0/255.0, green: 160.0/255.0, blue:  33.0/255.0, alpha: 1.0).CGColor]
+            case .Purple:
+                return [UIColor(red: 217.0/255.0, green: 168.0/255.0, blue: 252.0/255.0, alpha: 1.0).CGColor,
+                        UIColor(red: 140.0/255.0, green:  70.0/255.0, blue: 250.0/255.0, alpha: 1.0).CGColor]
+            }
+        }
+    }
+    
+    enum GraphDirection {
+        case LeftToRight
+        case RightToLeft
+    }
+    
+    enum GraphType {
+        case Line
+        case Scatter
+    }
+    
+    
     private let gradientBackground = CAGradientLayer()
     private var lineView: LineView!
     private var accessoryView: AccessoryView!
+    
+    
     
     
     // -------------------------------
@@ -98,6 +109,16 @@ class MOONGraphView: UIView {
         gradientBackground.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
         layer.addSublayer(gradientBackground)
         
+        lineView = LineView(frame: bounds)
+        lineView.layer.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
+        lineView.maxSamples = maxSamples
+        lineView.maxValue = maxValue
+        lineView.minValue = minValue
+        lineView.graphDirection = graphDirection
+        lineView.numberOfGraphs = numberOfGraphs
+        lineView.graphType = graphType
+        addSubview(lineView)
+        
         accessoryView = AccessoryView(frame: bounds)
         accessoryView.layer.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
         accessoryView.title = title
@@ -106,15 +127,6 @@ class MOONGraphView: UIView {
         accessoryView.minValue = minValue
         accessoryView.graphDirection = graphDirection
         addSubview(accessoryView)
-        
-        lineView = LineView(frame: bounds)
-        lineView.layer.cornerRadius = roundedCorners ? Constants.CornerRadius : 0.0
-        lineView.maxSamples = maxSamples
-        lineView.maxValue = maxValue
-        lineView.minValue = minValue
-        lineView.graphDirection = graphDirection
-        lineView.numberOfGraphs = numberOfGraphs
-        addSubview(lineView)
     }
     
     
@@ -146,8 +158,8 @@ class MOONGraphView: UIView {
         }
     }
     
-    /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Orange`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Orange`.
-    var themeColor = GraphColor.Orange {
+    /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Red`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Red`.
+    var themeColor = GraphColor.Red {
         didSet {
             gradientBackground.colors = themeColor.colors()
         }
@@ -192,6 +204,13 @@ class MOONGraphView: UIView {
         }
     }
     
+    /// Changes how the samples are drawn. The current options are `.Line` and `.Scatter`. The default is `.Line`.
+    var graphType = GraphType.Line {
+        didSet {
+            lineView.graphType = graphType
+        }
+    }
+    
     /// This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
     func addSamples(newSamples: Double...) {
         lineView.addSamples(newSamples)
@@ -225,19 +244,48 @@ class MOONGraphView: UIView {
 
 
 
+
+
 private class LineView: UIView {
     private var sampleArrays = [[Double]]()
     
-    var maxSamples = 0                              { didSet { setNeedsDisplay() } }
-    var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplay() } }
-    var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplay() } }
-    var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplay() } }
+    
+    // -------------------------------
+    // MARK: Properties
+    // -------------------------------
+    
+    var maxSamples = 0 {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var maxValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var minValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var graphDirection = MOONGraphView.GraphDirection.LeftToRight {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var graphType = MOONGraphView.GraphType.Line {
+        didSet { setNeedsDisplay() }
+    }
+    
     var numberOfGraphs = 1 {
         didSet {
             sampleArrays = [[Double]](count: numberOfGraphs, repeatedValue: [Double]())
             setNeedsDisplay()
         }
     }
+    
+    
+    
+    // -------------------------------
+    // MARK: Initialization
+    // -------------------------------
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -254,6 +302,13 @@ private class LineView: UIView {
         backgroundColor = UIColor.clearColor()
         layer.drawsAsynchronously = true
     }
+    
+    
+    
+    
+    // -------------------------------
+    // MARK: Methods
+    // -------------------------------
     
     func addSamples(newSamples: [Double]) {
         guard newSamples.count == sampleArrays.count else { return }
@@ -281,7 +336,7 @@ private class LineView: UIView {
     // -------------------------------
     
     private override func drawRect(rect: CGRect) {
-        UIColor(white: 1.0, alpha: Constants.Alpha).setStroke()
+        UIColor(white: 1.0, alpha: Constants.Alpha).set() // Sets stroke and fill
         drawGraph()
     }
     
@@ -294,40 +349,100 @@ private class LineView: UIView {
         
         for samples in sampleArrays {
             var currentXValue: CGFloat
+            
             switch graphDirection {
                 case .RightToLeft: currentXValue = (progress - 1.0) * -1.0 * window
                 case .LeftToRight: currentXValue = progress * window + Constants.ValueLabelWidth
             }
             
-            let path = UIBezierPath()
-            
-            for (index, sample) in samples.enumerate() {
-                let y: CGFloat = (maxValue - CGFloat(sample)) * pointsToSampleValueRatio + Constants.TickMargin
+            switch graphType {
+                case .Line:
+                    let path = UIBezierPath()
+                    
+                    for (index, sample) in samples.enumerate() {
+                        let y: CGFloat = (maxValue - CGFloat(sample)) * pointsToSampleValueRatio + Constants.TickMargin
+                        
+                        let point = CGPoint(x: currentXValue, y: y)
+                        
+                        if index == 0 { path.moveToPoint(point) }
+                        else { path.addLineToPoint(point) }
+                        
+                        switch graphDirection {
+                            case .RightToLeft: currentXValue += widthPerSample
+                            case .LeftToRight: currentXValue -= widthPerSample
+                        }
+                    }
+                    
+                    path.lineWidth = Constants.GraphLineWidth
+                    path.stroke()
                 
-                let point = CGPoint(x: currentXValue, y: y)
-                
-                if index == 0 { path.moveToPoint(point) }
-                else { path.addLineToPoint(point) }
-                
-                switch graphDirection {
-                    case .RightToLeft: currentXValue += widthPerSample
-                    case .LeftToRight: currentXValue -= widthPerSample
-                }
+                case .Scatter:
+                    for sample in samples {
+                        let y: CGFloat = (maxValue - CGFloat(sample)) * pointsToSampleValueRatio + Constants.TickMargin
+                        
+                        let point = CGPoint(x: currentXValue, y: y)
+                        
+                        let path = UIBezierPath(
+                            arcCenter: point,
+                            radius: Constants.ScatterPointRadius,
+                            startAngle: 0.0,
+                            endAngle: CGFloat(2 * M_PI),
+                            clockwise: true
+                        )
+                        path.fill()
+                        
+                        switch graphDirection {
+                            case .RightToLeft: currentXValue += widthPerSample
+                            case .LeftToRight: currentXValue -= widthPerSample
+                        }
+                    }
             }
             
-            path.lineWidth = Constants.GraphWidth
-            path.stroke()
+            
         }
     }
 }
 
+
+
+
+
+
+
+
+
+
 private class AccessoryView: UIView {
     
-    var title = ""                                  { didSet { setNeedsDisplay() } }
-    var subTitle = ""                               { didSet { setNeedsDisplay() } }
-    var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplay() } }
-    var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplay() } }
-    var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplay() } }
+    // -------------------------------
+    // MARK: Properties
+    // -------------------------------
+    
+    var title = "" {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var subTitle = "" {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var maxValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var minValue: CGFloat = 0.0 {
+        didSet { setNeedsDisplay() }
+    }
+    
+    var graphDirection = MOONGraphView.GraphDirection.LeftToRight {
+        didSet { setNeedsDisplay() }
+    }
+    
+    
+    
+    // -------------------------------
+    // MARK: Initialization
+    // -------------------------------
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -343,6 +458,7 @@ private class AccessoryView: UIView {
         opaque = false
         backgroundColor = UIColor.clearColor()
     }
+    
     
     
     // -------------------------------

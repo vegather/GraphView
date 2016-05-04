@@ -40,6 +40,9 @@ If you want your view to draw more than one graph at the same time (say x, y, z 
 ##### var roundedCorners = false
 Use this to make the corners rounded or square. The default is true, meaning rounded corners.
 
+##### var graphType = GraphType.Line
+Changes how the samples are drawn. The current options are `.Line` and `.Scatter`. The default is `.Line`.
+
 ### Methods
 ##### func addSamples(newSamples: Double...)
 This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
@@ -48,9 +51,11 @@ This method is where you add your data to the graph. The value of the samples yo
 Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `maxSamples` etc are kept the same. Useful if you want to reuse the same graph view.
 
 ## Todo
-- Have an auto-scale feature
+- Add IBDesignable
+- Have an auto-scale feature. Might do this by having an Optional scale tuple with a min and max value. If this is nil, use auto-scale. If it's set use a fixed scale.
 - Change the size of the labels when the view gets too small.
 - I'm pretty sure there's a different way of doing this that will make it faster. Will probably end up drawing into a bunch of tall, skinny CALayers, and then moving them sideways.
+- <del>Add scatter plot</del>
 
 ## Contact
 - [@vegather on Twitter](http://www.twitter.com/vegather)

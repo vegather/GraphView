@@ -22,7 +22,7 @@ import UIKit
 
 enum GraphColor {
     case Gray
-    case Orange
+    case Red
     case Green
     case Blue
     case Turquoise
@@ -34,7 +34,7 @@ enum GraphColor {
         case Gray:
             return [UIColor(red: 210.0/255.0, green: 209.0/255.0, blue: 215.0/255.0, alpha: 1.0).CGColor,
                     UIColor(red: 141.0/255.0, green: 140.0/255.0, blue: 146.0/255.0, alpha: 1.0).CGColor]
-        case .Orange:
+        case .Red:
             return [UIColor(red: 255.0/255.0, green: 148.0/255.0, blue:  86.0/255.0, alpha: 1.0).CGColor,
                     UIColor(red: 253.0/255.0, green:  58.0/255.0, blue:  52.0/255.0, alpha: 1.0).CGColor]
         case .Green:
@@ -61,14 +61,20 @@ enum GraphDirection {
     case RightToLeft
 }
 
+enum GraphType {
+    case Line
+    case Scatter
+}
+
 private struct Constants {
     static let FontName = "HelveticaNeue"
-    static let ValueLabelWidth: CGFloat = 70.0
-    static let TickMargin     : CGFloat = 15.0
-    static let TickWidth      : CGFloat = 10.0
-    static let Alpha          : CGFloat = 0.6
-    static let CornerRadius   : CGFloat = 10.0
-    static let GraphWidth     : CGFloat = 2.0
+    static let ValueLabelWidth    : CGFloat = 70.0
+    static let TickMargin         : CGFloat = 15.0
+    static let TickWidth          : CGFloat = 10.0
+    static let Alpha              : CGFloat = 0.6
+    static let CornerRadius       : CGFloat = 10.0
+    static let GraphLineWidth     : CGFloat = 2.0
+    static let ScatterPointRadius : CGFloat = 2.0
 }
 
 class MOONGraphView: UIView {
@@ -114,6 +120,7 @@ class MOONGraphView: UIView {
         lineView.minValue = minValue
         lineView.graphDirection = graphDirection
         lineView.numberOfGraphs = numberOfGraphs
+        lineView.graphType = graphType
         addSubview(lineView)
     }
     
@@ -146,8 +153,8 @@ class MOONGraphView: UIView {
         }
     }
     
-    /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Orange`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Orange`.
-    var themeColor = GraphColor.Orange {
+    /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Red`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Red`.
+    var themeColor = GraphColor.Red {
         didSet {
             gradientBackground.colors = themeColor.colors()
         }
@@ -192,6 +199,12 @@ class MOONGraphView: UIView {
         }
     }
     
+    var graphType = GraphType.Line {
+        didSet {
+            lineView.graphType = graphType
+        }
+    }
+    
     /// This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
     func addSamples(newSamples: Double...) {
         lineView.addSamples(newSamples)
@@ -232,6 +245,7 @@ private class LineView: UIView {
     var maxValue: CGFloat = 0.0                     { didSet { setNeedsDisplay() } }
     var minValue: CGFloat = 0.0                     { didSet { setNeedsDisplay() } }
     var graphDirection = GraphDirection.LeftToRight { didSet { setNeedsDisplay() } }
+    var graphType      = GraphType.Line             { didSet { setNeedsDisplay() } }
     var numberOfGraphs = 1 {
         didSet {
             sampleArrays = [[Double]](count: numberOfGraphs, repeatedValue: [Double]())
@@ -281,11 +295,15 @@ private class LineView: UIView {
     // -------------------------------
     
     private override func drawRect(rect: CGRect) {
-        UIColor(white: 1.0, alpha: Constants.Alpha).setStroke()
-        drawGraph()
+        UIColor(white: 1.0, alpha: Constants.Alpha).set() // Sets stroke and fill
+        
+        switch graphType {
+            case .Line   : drawLineGraph()
+            case .Scatter: drawScatterPlot()
+        }
     }
     
-    private func drawGraph() {
+    private func drawLineGraph() {
         let widthPerSample = (bounds.width - Constants.ValueLabelWidth) / CGFloat(maxSamples - 1)
         let pointsToSampleValueRatio = (bounds.height - Constants.TickMargin * 2) / (maxValue - minValue)
         
@@ -315,8 +333,44 @@ private class LineView: UIView {
                 }
             }
             
-            path.lineWidth = Constants.GraphWidth
+            path.lineWidth = Constants.GraphLineWidth
             path.stroke()
+        }
+    }
+    
+    private func drawScatterPlot() {
+        let widthPerSample = (bounds.width - Constants.ValueLabelWidth) / CGFloat(maxSamples - 1)
+        let pointsToSampleValueRatio = (bounds.height - Constants.TickMargin * 2) / (maxValue - minValue)
+        
+        let progress = CGFloat(sampleArrays[0].count) / CGFloat(maxSamples)
+        let window = bounds.width - Constants.ValueLabelWidth
+        
+        for samples in sampleArrays {
+            var currentXValue: CGFloat
+            switch graphDirection {
+                case .RightToLeft: currentXValue = (progress - 1.0) * -1.0 * window
+                case .LeftToRight: currentXValue = progress * window + Constants.ValueLabelWidth
+            }
+            
+            for sample in samples {
+                let y: CGFloat = (maxValue - CGFloat(sample)) * pointsToSampleValueRatio + Constants.TickMargin
+                
+                let point = CGPoint(x: currentXValue, y: y)
+                
+                let path = UIBezierPath(
+                    arcCenter: point,
+                    radius: Constants.ScatterPointRadius,
+                    startAngle: 0.0,
+                    endAngle: CGFloat(2 * M_PI),
+                    clockwise: true
+                )
+                path.fill()
+                
+                switch graphDirection {
+                    case .RightToLeft: currentXValue += widthPerSample
+                    case .LeftToRight: currentXValue -= widthPerSample
+                }
+            }
         }
     }
 }

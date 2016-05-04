@@ -22,16 +22,17 @@ import Cocoa
 
 class ViewController: NSViewController {
     
-    @IBOutlet weak var graph1: GraphView!
-    @IBOutlet weak var graph2: GraphView!
-    @IBOutlet weak var graph3: GraphView!
-    @IBOutlet weak var graph4: GraphView!
-    @IBOutlet weak var graph5: GraphView!
-    @IBOutlet weak var graph6: GraphView!
-    @IBOutlet weak var graph7: GraphView!
+    @IBOutlet weak var graph1: MOONGraphView!
+    @IBOutlet weak var graph2: MOONGraphView!
+    @IBOutlet weak var graph3: MOONGraphView!
+    @IBOutlet weak var graph4: MOONGraphView!
+    @IBOutlet weak var graph5: MOONGraphView!
+    @IBOutlet weak var graph6: MOONGraphView!
+    @IBOutlet weak var graph7: MOONGraphView!
     
     var displayLink: CVDisplayLink?
     var i = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,7 @@ class ViewController: NSViewController {
         graph1.subTitle = "λ = 690nm"
         graph1.maxSamples = 50
         
-        graph2.themeColor = .Orange
+        graph2.themeColor = .Red
         graph2.title = "Orange"
         graph2.subTitle = "λ = 590nm"
         graph2.graphDirection = .LeftToRight
@@ -69,10 +70,11 @@ class ViewController: NSViewController {
         graph4.numberOfGraphs = 3
         
         graph5.themeColor = .Purple
+        graph5.graphType = .Scatter
         graph5.title = "Aubergine"
         graph5.subTitle = "λ = 430nm"
         graph5.roundedCorners = false
-        graph5.maxSamples = 300
+        graph5.maxSamples = 200
         graph5.numberOfGraphs = 3
         
         graph6.themeColor = .Blue
@@ -91,11 +93,11 @@ class ViewController: NSViewController {
         
         
         func displayLinkOutputCallback(
-            displayLink: CVDisplayLink,
-            _ inNow: UnsafePointer<CVTimeStamp>,
-            _ inOutputTime: UnsafePointer<CVTimeStamp>,
-            _ flagsIn: CVOptionFlags,
-            _ flagsOut: UnsafeMutablePointer<CVOptionFlags>,
+              displayLink       : CVDisplayLink,
+            _ inNow             : UnsafePointer<CVTimeStamp>,
+            _ inOutputTime      : UnsafePointer<CVTimeStamp>,
+            _ flagsIn           : CVOptionFlags,
+            _ flagsOut          : UnsafeMutablePointer<CVOptionFlags>,
             _ displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn
         {
             unsafeBitCast(displayLinkContext, ViewController.self).update()
@@ -103,8 +105,10 @@ class ViewController: NSViewController {
         }
         
         CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
-        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
-        CVDisplayLinkStart(displayLink!)
+        if let displayLink = displayLink {
+            CVDisplayLinkSetOutputCallback(displayLink, displayLinkOutputCallback, UnsafeMutablePointer<Void>(unsafeAddressOf(self)))
+            CVDisplayLinkStart(displayLink)
+        }
     }
     
     func squareForI(input: Double) -> Double {

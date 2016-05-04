@@ -40,19 +40,21 @@ class ViewController: UIViewController {
         graph1.subTitle = "λ = 690nm"
         graph1.graphDirection = .LeftToRight
         graph1.roundedCorners = false
+        graph1.graphType = .Scatter
         scrollView.addSubview(graph1)
         graphs.append(graph1)
         
         currentY += graphHeight + separator
         
         let graph2 = MOONGraphView(frame: CGRect(x: 0.0, y: currentY, width: scrollView.bounds.width, height: graphHeight))
-        graph2.themeColor = .Orange
+        graph2.themeColor = .Red
         graph2.maxSamples = 330
         graph2.maxValue   = 4.0
         graph2.minValue   = -4.0
         graph2.title      = "Orange"
         graph2.subTitle   = "λ = 590nm"
         graph2.roundedCorners = false
+        graph2.graphType = .Scatter
         scrollView.addSubview(graph2)
         graphs.append(graph2)
         
@@ -116,12 +118,13 @@ class ViewController: UIViewController {
         graph7.subTitle = "λ = 430nm"
         graph7.numberOfGraphs = 3
         graph7.roundedCorners = false
+        graph7.graphType = .Scatter
         scrollView.addSubview(graph7)
         graphs.append(graph7)
         
         scrollView.contentSize = CGSize(width: scrollView.bounds.width, height: currentY + graphHeight)
         
-        let updater = CADisplayLink(target: self, selector: Selector("update"))
+        let updater = CADisplayLink(target: self, selector: #selector(update))
         updater.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         updater.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: UITrackingRunLoopMode) // Makes sure update is called while scrolling
     }
