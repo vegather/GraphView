@@ -33,7 +33,6 @@ private struct Constants {
 
 
 
-
 class MOONGraphView: NSView {
     
     enum GraphColor {
@@ -121,7 +120,7 @@ class MOONGraphView: NSView {
         
         accessoryView = AccessoryView(frame: bounds)
         accessoryView!.title = title
-        accessoryView!.subTitle = subTitle
+        accessoryView!.subtitle = subtitle
         accessoryView!.maxValue = maxValue
         accessoryView!.minValue = minValue
         accessoryView!.graphDirection = graphDirection
@@ -143,9 +142,9 @@ class MOONGraphView: NSView {
     }
     
     /// Used to set a subtitle that will go right underneath the title. The default value for this is `""`, and will thus not be displayed.
-    var subTitle: String = "" {
+    var subtitle: String = "" {
         didSet {
-            accessoryView?.subTitle = subTitle
+            accessoryView?.subtitle = subtitle
         }
     }
     
@@ -413,7 +412,7 @@ private class AccessoryView: NSView {
         didSet { setNeedsDisplayInRect(bounds) }
     }
     
-    var subTitle = "" {
+    var subtitle = "" {
         didSet { setNeedsDisplayInRect(bounds) }
     }
     
@@ -584,7 +583,7 @@ private class AccessoryView: NSView {
         ] as Dictionary<String, AnyObject>
         
         let titleLabel    = NSAttributedString(string: title, attributes: titleAttributes)
-        let subTitleLabel = NSAttributedString(string: subTitle, attributes: subTitleAttributes)
+        let subTitleLabel = NSAttributedString(string: subtitle, attributes: subTitleAttributes)
         
         let horizontalMargin   : CGFloat = 20.0
         let verticalMargin     : CGFloat = 30.0

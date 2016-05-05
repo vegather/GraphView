@@ -51,10 +51,10 @@ This method is where you add your data to the graph. The value of the samples yo
 Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `maxSamples` etc are kept the same. Useful if you want to reuse the same graph view.
 
 ## Todo
-- Add IBDesignable
 - Have an auto-scale feature. Might do this by having an Optional scale tuple with a min and max value. If this is nil, use auto-scale. If it's set use a fixed scale.
 - Change the size of the labels when the view gets too small.
 - I'm pretty sure there's a different way of doing this that will make it faster. Will probably end up drawing into a bunch of tall, skinny CALayers, and then moving them sideways.
+- <del>Add IBDesignable</del>
 - <del>Add scatter plot</del>
 
 ## Contact

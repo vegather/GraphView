@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         graph1.themeColor = .Gray
         graph1.maxSamples = 50
         graph1.title = "Dates"
-        graph1.subTitle = "λ = 690nm"
+        graph1.subtitle = "λ = 690nm"
         graph1.graphDirection = .LeftToRight
         graph1.roundedCorners = false
         graph1.graphType = .Scatter
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         graph2.maxValue   = 4.0
         graph2.minValue   = -4.0
         graph2.title      = "Orange"
-        graph2.subTitle   = "λ = 590nm"
+        graph2.subtitle   = "λ = 590nm"
         graph2.roundedCorners = false
         graph2.graphType = .Scatter
         scrollView.addSubview(graph2)
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         graph3.maxValue   = 2.0
         graph3.minValue   = -2.0
         graph3.title = "Kiwi"
-        graph3.subTitle = "λ = 530nm"
+        graph3.subtitle = "λ = 530nm"
         graph3.roundedCorners = false
         scrollView.addSubview(graph3)
         graphs.append(graph3)
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         graph4.minValue   = -1.1
         graph4.maxSamples = 1000
         graph4.title = "Blueberry"
-        graph4.subTitle = "λ = 460nm"
+        graph4.subtitle = "λ = 460nm"
         graph4.roundedCorners = false
         scrollView.addSubview(graph4)
         graphs.append(graph4)
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         graph5.maxValue = 6.0
         graph5.minValue = -6.0
         graph5.title = "Blue Grapes"
-        graph5.subTitle = "λ = 480nm"
+        graph5.subtitle = "λ = 480nm"
         graph5.roundedCorners = false
         scrollView.addSubview(graph5)
         graphs.append(graph5)
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
         graph6.maxSamples = 300
         graph6.maxValue   = 2.0
         graph6.title = "Lemon"
-        graph6.subTitle = "λ = 575nm"
+        graph6.subtitle = "λ = 575nm"
         graph6.numberOfGraphs = 3
         graph6.roundedCorners = false
         scrollView.addSubview(graph6)
@@ -115,7 +115,7 @@ class ViewController: UIViewController {
         let graph7 = MOONGraphView(frame: CGRect(x: 0.0, y: currentY, width: scrollView.bounds.width, height: graphHeight))
         graph7.themeColor = .Purple
         graph7.title = "Aubergine"
-        graph7.subTitle = "λ = 430nm"
+        graph7.subtitle = "λ = 430nm"
         graph7.numberOfGraphs = 3
         graph7.roundedCorners = false
         graph7.graphType = .Scatter

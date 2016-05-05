@@ -42,12 +42,12 @@ class ViewController: NSViewController {
         
         graph1.themeColor = .Gray
         graph1.title = "Dates"
-        graph1.subTitle = "λ = 690nm"
+        graph1.subtitle = "λ = 690nm"
         graph1.maxSamples = 50
         
         graph2.themeColor = .Red
         graph2.title = "Orange"
-        graph2.subTitle = "λ = 590nm"
+        graph2.subtitle = "λ = 590nm"
         graph2.graphDirection = .LeftToRight
         graph2.maxSamples = 500
         graph2.maxValue   = 8.0
@@ -55,7 +55,7 @@ class ViewController: NSViewController {
         
         graph3.themeColor = .Green
         graph3.title = "Kiwi"
-        graph3.subTitle = "λ = 530nm"
+        graph3.subtitle = "λ = 530nm"
         graph3.graphDirection = .LeftToRight
         graph3.maxSamples = 400
         graph3.maxValue   = 2.0
@@ -63,7 +63,7 @@ class ViewController: NSViewController {
         
         graph4.themeColor = .Yellow
         graph4.title = "Lemon"
-        graph4.subTitle = "λ = 575nm"
+        graph4.subtitle = "λ = 575nm"
         graph4.roundedCorners = false
         graph4.maxSamples = 400
         graph4.maxValue   = 2.0
@@ -72,21 +72,21 @@ class ViewController: NSViewController {
         graph5.themeColor = .Purple
         graph5.graphType = .Scatter
         graph5.title = "Aubergine"
-        graph5.subTitle = "λ = 430nm"
+        graph5.subtitle = "λ = 430nm"
         graph5.roundedCorners = false
         graph5.maxSamples = 200
         graph5.numberOfGraphs = 3
         
         graph6.themeColor = .Blue
         graph6.title = "Blueberry"
-        graph6.subTitle = "λ = 460nm"
+        graph6.subtitle = "λ = 460nm"
         graph6.maxSamples = 1000
         graph6.maxValue   = 5.0
         graph6.minValue   = -1.1
         
         graph7.themeColor = .Turquoise
         graph7.title = "Blue Grapes"
-        graph7.subTitle = "λ = 480nm"
+        graph7.subtitle = "λ = 480nm"
         graph7.maxSamples = 400
         graph7.maxValue = 6.0
         graph7.minValue = -6.0
