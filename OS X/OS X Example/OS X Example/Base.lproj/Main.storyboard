@@ -676,22 +676,22 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="kdC-FZ-TXn" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="850" width="560" height="130"/>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="T3Y-fA-hSC" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3Y-fA-hSC" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="297" width="560" height="130"/>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="hBm-tT-hEF" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hBm-tT-hEF" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="573" width="560" height="130"/>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Yp9-Bu-TL9" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yp9-Bu-TL9" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="711" width="560" height="131"/>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ksg-uo-FVm" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ksg-uo-FVm" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="435" width="560" height="130"/>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ed4-uR-nLk" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ed4-uR-nLk" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="158" width="560" height="131"/>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="W5J-by-E9U" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W5J-by-E9U" customClass="MOONGraphView" customModule="OS_X_Example" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="560" height="130"/>
                             </customView>
                         </subviews>
