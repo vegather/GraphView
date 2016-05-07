@@ -19,6 +19,7 @@
 
 
 import Cocoa
+import MOONGraphView
 
 class ViewController: NSViewController {
     

@@ -32,11 +32,10 @@ private struct Constants {
 }
 
 
-
-
-class MOONGraphView: NSView {
+@IBDesignable
+public class MOONGraphView: NSView {
     
-    enum GraphColor {
+    public enum GraphColor {
         case Gray
         case Red
         case Green
@@ -72,12 +71,12 @@ class MOONGraphView: NSView {
         }
     }
     
-    enum GraphDirection {
+    public enum GraphDirection {
         case LeftToRight
         case RightToLeft
     }
     
-    enum GraphType {
+    public enum GraphType {
         case Line
         case Scatter
     }
@@ -95,12 +94,16 @@ class MOONGraphView: NSView {
     // MARK: Initialization
     // -------------------------------
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
 
+        addSubviews()
+    }
+    
+    private func addSubviews() {
         wantsLayer = true
         guard let layer = layer else { return }
-
+        
         NSBezierPath.setDefaultLineWidth(Constants.GraphWidth)
         
         gradientBackground.frame = layer.bounds
@@ -121,7 +124,7 @@ class MOONGraphView: NSView {
         
         accessoryView = AccessoryView(frame: bounds)
         accessoryView!.title = title
-        accessoryView!.subTitle = subTitle
+        accessoryView!.subtitle = subtitle
         accessoryView!.maxValue = maxValue
         accessoryView!.minValue = minValue
         accessoryView!.graphDirection = graphDirection
@@ -136,21 +139,21 @@ class MOONGraphView: NSView {
     // -------------------------------
     
     /// Used to set the title of the graph in one of the upper corners. The default value for this is `""`, meaning that it will not be displayed.
-    var title: String = "" {
+    @IBInspectable public var title: String = "" {
         didSet {
             accessoryView?.title = title
         }
     }
     
     /// Used to set a subtitle that will go right underneath the title. The default value for this is `""`, and will thus not be displayed.
-    var subTitle: String = "" {
+    @IBInspectable public var subtitle: String = "" {
         didSet {
-            accessoryView?.subTitle = subTitle
+            accessoryView?.subtitle = subtitle
         }
     }
     
     /// Specifies which way the graph will go. This is an enum with two possible options: `.LeftToRight`, and `.RightToLeft`. Setting this will also change which corner the title and subtitle will get drawn in (upper left corner for `.RightToLeft`, and vice versa). It also changes which side the values for the y-axis gets drawn (right side for `.RightToLeft`, and vice versa). The default is `.RightToLeft`.
-    var graphDirection = GraphDirection.RightToLeft {
+    public var graphDirection = GraphDirection.RightToLeft {
         didSet {
             accessoryView?.graphDirection = graphDirection
             lineView?.graphDirection = graphDirection
@@ -158,21 +161,21 @@ class MOONGraphView: NSView {
     }
     
     /// This will set the background gradient of the graph. It's an enum with seven colors to pick from: `.Gray`, `.Red`, `.Green`, `.Blue`, `.Turquoise`, `.Yellow`, and `.Purple`. The default is `.Red`.
-    var themeColor = GraphColor.Red {
+    public var themeColor = GraphColor.Red {
         didSet {
             gradientBackground.colors = themeColor.colors()
         }
     }
     
     /// This sets how many samples will fit within the view. E.g., if you set this to 200, what you will see in the view is the last 200 samples. You can't set it to any lower than 2 (for obvious reasons). The default value of this is 150.
-    var maxSamples = 150  {
+    public var maxSamples = 150  {
         didSet {
             lineView?.maxSamples = max(2, maxSamples)
         }
     }
     
     /// Determines what the maximum expected value is. It is used as an upper limit for the view. The default is 1.0.
-    var maxValue: CGFloat = 1.0 {
+    @IBInspectable public var maxValue: CGFloat = 1.0 {
         didSet {
             accessoryView?.maxValue = maxValue
             lineView?.maxValue = maxValue
@@ -180,22 +183,22 @@ class MOONGraphView: NSView {
     }
     
     /// Determines what the minimum expected value is. It is used as an lower limit for the view. The default is -1.0.
-    var minValue: CGFloat = -1.0 {
+    @IBInspectable public var minValue: CGFloat = -1.0 {
         didSet {
             accessoryView?.minValue = minValue
             lineView?.minValue = minValue
         }
     }
     
-    /// If you want your view to draw more than one graph at the same time (say x, y, z values of an accelerometer), you can specify that using this property. Notice that the `addSamples` method takes an argument of type `Double...` (called a variadic parameter). Whatever value you set for the `numberOfGraphs` property, you need to pass in the same number of arguments to this method, otherwise it will do nothing. If you change this property, all the samples you've added so far will be removed. The default is 1, meaning the `addSamples` method takes 1 argument.v
-    var numberOfGraphs = 1 {
+    /// If you want your view to draw more than one graph at the same time (say x, y, z values of an accelerometer), you can specify that using this property. Notice that the `addSamples` method takes an argument of type `Double...` (called a variadic parameter). Whatever value you set for the `numberOfGraphs` property, you need to pass in the same number of arguments to this method, otherwise it will do nothing. If you change this property, all the samples you've added so far will be removed. The default is 1, meaning the `addSamples` method takes 1 argument.
+    public var numberOfGraphs = 1 {
         didSet {
             lineView?.numberOfGraphs = max(1, numberOfGraphs)
         }
     }
     
     /// Use this to make the corners rounded or square. The default is true, meaning rounded corners.
-    var roundedCorners = true {
+    @IBInspectable public var roundedCorners = true {
         didSet {
             gradientBackground.cornerRadius    = roundedCorners ? Constants.CornerRadius : 0.0
             lineView?.cornerRadius             = roundedCorners ? Constants.CornerRadius : 0.0
@@ -203,19 +206,19 @@ class MOONGraphView: NSView {
     }
     
     /// Changes how the samples are drawn. The current options are .Line and .Scatter. The default is .Line
-    var graphType = GraphType.Line {
+    public var graphType = GraphType.Line {
         didSet {
             lineView?.graphType = graphType
         }
     }
     
     /// This method is where you add your data to the graph. The value of the samples you add should be within the range `[minValue, maxValue]`, otherwise the graph will draw outside the view. Notice that this takes `Double...` as an argument (called a variadic parameter), which means that you can pass it one or more `Double` values as arguments. This is so that you can draw multiple graphs in the same view at the same time (say x, y, z data from an accelerometer). The number of arguments you pass needs to correspond to the `numberOfGraphs` property, otherwise this method will do nothing.
-    func addSamples(newSamples: Double...) {
+    public func addSamples(newSamples: Double...) {
         lineView?.addSamples(newSamples)
     }
     
     /// Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `maxSamples` etc are kept the same. Useful if you want to reuse the same graph view.
-    func reset() {
+    public func reset() {
         lineView?.reset()
     }
     
@@ -226,7 +229,7 @@ class MOONGraphView: NSView {
     // MARK: Drawing
     // -------------------------------
     
-    override func layoutSublayersOfLayer(layer: CALayer) {
+    override public func layoutSublayersOfLayer(layer: CALayer) {
         if let selfLayer = self.layer {
             gradientBackground.frame = selfLayer.bounds
             accessoryView?.frame = selfLayer.bounds
@@ -234,6 +237,17 @@ class MOONGraphView: NSView {
         }
         
         gradientBackground.removeAllAnimations()
+    }
+    
+    override public func prepareForInterfaceBuilder() {
+        addSubviews()
+        
+        if title == "" { title = "Heading" }
+        if subtitle == "" { subtitle = "Subtitle" }
+        
+        for i in 0..<maxSamples {
+            addSamples(sin(Double(i) * 0.1))
+        }
     }
     
 }
@@ -413,7 +427,7 @@ private class AccessoryView: NSView {
         didSet { setNeedsDisplayInRect(bounds) }
     }
     
-    var subTitle = "" {
+    var subtitle = "" {
         didSet { setNeedsDisplayInRect(bounds) }
     }
     
@@ -584,7 +598,7 @@ private class AccessoryView: NSView {
         ] as Dictionary<String, AnyObject>
         
         let titleLabel    = NSAttributedString(string: title, attributes: titleAttributes)
-        let subTitleLabel = NSAttributedString(string: subTitle, attributes: subTitleAttributes)
+        let subTitleLabel = NSAttributedString(string: subtitle, attributes: subTitleAttributes)
         
         let horizontalMargin   : CGFloat = 20.0
         let verticalMargin     : CGFloat = 30.0

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>MOONGraphView.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>OS X Example.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>9A2555C31C8384AD00951A57</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9A4B7B1D1CDE4BF1003E94A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9A4B7B301CDE55BC003E94A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
