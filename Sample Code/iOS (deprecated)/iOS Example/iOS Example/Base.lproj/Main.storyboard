@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wV9-hU-NkI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13165.3"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="C3G-pu-gDG">
+            <objects>
+                <viewController id="wV9-hU-NkI" customClass="ViewController" customModule="iOS_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gO1-53-OBF"/>
+                        <viewControllerLayoutGuide type="bottom" id="zwF-I0-KgC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="65t-hw-DGl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9w-ga-APR">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zwF-I0-KgC" firstAttribute="top" secondItem="x9w-ga-APR" secondAttribute="bottom" id="24r-AS-4wa"/>
+                            <constraint firstItem="x9w-ga-APR" firstAttribute="trailing" secondItem="65t-hw-DGl" secondAttribute="trailingMargin" constant="20" id="9No-Xo-XxN"/>
+                            <constraint firstItem="x9w-ga-APR" firstAttribute="leading" secondItem="65t-hw-DGl" secondAttribute="leadingMargin" constant="-20" id="aqp-eZ-tH4"/>
+                            <constraint firstItem="x9w-ga-APR" firstAttribute="top" secondItem="gO1-53-OBF" secondAttribute="bottom" constant="-20" id="f7C-SP-gvd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="x9w-ga-APR" id="hgW-V2-aB1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tqu-oh-qae" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="403" y="598"/>
+        </scene>
+    </scenes>
+</document>
