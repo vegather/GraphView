@@ -19,6 +19,7 @@ The entire library is just one class called `GraphView`. It has a range of prope
 This will set the background gradient of the graph. It's an enum with eight colors to pick from: `.gray`, `.red`, `.green`, `.blue`, `.turquoise`, `.yellow`, `.purple`, and `.clear`. The default is `.blue`.
 
 ##### var sampleColor = SampleColor.color(plain: .white)
+The color of the samples plotted in the graph. This can either be a `.plain` color, or a `.gradient` one. The default value is plain white.
 
 ##### var roundedCorners = false
 Use this to make the corners rounded or square. The default is true, meaning rounded corners.
@@ -30,34 +31,41 @@ Used to set the title of the graph in one of the upper corners. The default valu
 Used to set a subtitle that will go right underneath the title. The default value for this is `""`, and will thus not be displayed.
 
 ##### var valueUnit: String = ""
+The unit of the samples added to the graph. This appears as a suffix for the value labels on the right hand side.
 
 ##### var valueUnitDecimals = 0
+The number of desired decimals displayed for the values. The default is 0.
 
 ##### var capacity = 1000
-This sets how many samples will fit within the view. E.g., if you set this to 200, what you will see in the view is the last 200 samples. You can't set it to any lower than 2. The default value of this is 150.
+The number of samples that fit in the graph view. When more samples than this are added, the oldest samples will slide off the left edge. This value can't be lower than 2. The default value is 1000.
 
 ##### var graphType = GraphType.scatter
-Changes how the samples are drawn. The current options are `.line` and `.scatter`. The default is `.scatter`.
+How the graph should be plotted. You can choose between `.line` and `.scatter`. The `.line` option currently only works when using the replace(with: ...) method to set the data.
 
 ##### var sampleSize = SampleSize.small
+The size of the samples. This is only applicable when `graphType` is set to `.scatter`.
 
 ##### var gesturesEnabled = true
+This property is only available on iOS. It specifies if the user should be able to change the capacity (by pinching horizontally), the minimum and maximum value (by pinching vertically), and moving up and down the y-axis (by swiping). When the user has started interacting, an "Auto-Scale" button will appear. This button is removed again when the user taps it.
 
 ##### var visibleRange: ClosedRange<Float> = 0...1
+Gets or sets the range of values that can be visible within the graph view. If `isAutoscaling` is set to true, this will change by itself. If you want to set this variable yourself, you should probably set `isAutoscaling` to false.
 
 ##### var isAutoscaling = true
+Whether or not the graph should be autoscaling. This will be false if the user is currently using gestures
 
 ##### var horizontalLines: [Float] = []
-
+Horizontal lines will be drawn with the y-axis values corresponding to the values in this array.
 
 
 
 
 ### Methods
 ##### func add(sample: Float)
-This method is where you add your data to the graph.
+This method is where you add your data to the graph. When the number of samples in the graph exceeds `capacity`, the values will disappear off to the left. If you want to set the `graphType` to `.line`, you have to call `replace(with: ...)` instead of this to make the graph look correct.
 
 ##### func replace(with: [Float])
+This replaces all the samples in the graph at the same time. It also sets the `capacity` to the correct value. This is a lot faster than looping through your data and continuously calling `add(sample: ...)` if you want to show a whole dataset at once. If you want to set the `graphType` to `.line`, you have to call this method instead of `add(sample: ...)` to make the graph look correct.
 
 ##### func clear()
 Removes all the samples you've added to the graph. All the other properties like `roundedCorners` and `capacity` etc are kept the same. Useful if you want to reuse the same graph view.

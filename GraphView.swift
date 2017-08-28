@@ -171,6 +171,7 @@ public class GraphView: View {
         }
     }
     
+    /// The number of desired decimals displayed for the values. The default is 0.
     public var valueUnitDecimals = 0 {
         didSet {
             updateMinMaxLabels()
@@ -178,7 +179,7 @@ public class GraphView: View {
     }
     
     /// The number of samples that fit in the graph view. When more samples than this are
-    /// added, the oldest samples will slide off the left edge. The default value is 5000.
+    /// added, the oldest samples will slide off the left edge. The default value is 1000.
     public var capacity: Int {
         get { return Int(_capacity) }
         set { _capacity = Float(newValue) }
@@ -197,7 +198,7 @@ public class GraphView: View {
         }
     }
     
-    /// The size of the samples. This only works when `graphType` is set to `.scatter`.
+    /// This is only applicable when `graphType` is set to `.scatter`.
     public var sampleSize = SampleSize.small {
         didSet {
             metalGraph.uniforms.pointSize = sampleSize.size()
@@ -210,10 +211,11 @@ public class GraphView: View {
         }
     }
     
-    /// Specifies if the user should be able to change the capacity (by pinching horizontally), 
-    /// the minimum and maximum value (by pinching vertically), and moving up and down the
-    /// y-axis (by swiping). When the user has started interacting, an "Auto-Scale" button
-    /// will appear. This button is removed again when the user taps it.
+    /// This property is only available on iOS. It specifies if the user should
+    /// be able to change the capacity (by pinching horizontally), the minimum
+    /// and maximum value (by pinching vertically), and moving up and down the
+    /// y-axis (by swiping). When the user has started interacting, an "Auto-Scale"
+    /// button will appear. This button is removed again when the user taps it.
     #if os(iOS)
     public var gesturesEnabled = true {
         didSet {
