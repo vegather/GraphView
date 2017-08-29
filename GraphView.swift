@@ -599,7 +599,7 @@ public class GraphView: View {
         }, completion: { _ in
             self.autoScaleButton?.removeFromSuperview()
             self.autoScaleButton = nil
-        }
+            }
         )
     }
     #endif
@@ -612,8 +612,6 @@ public class GraphView: View {
             ($0 - visibleRange.lowerBound) / (visibleRange.upperBound - visibleRange.lowerBound)
         }
     }
-
-
 
     // -------------------------------
     // MARK: Gesture Recognizers
@@ -750,9 +748,6 @@ public class GraphView: View {
     @objc private func autoScaleButtonTapped() {
         isAutoscaling = true
     }
-
-
-
 }
 
 #if os(iOS)
@@ -788,9 +783,6 @@ extension GraphView {
         self.maximumValueLabel.text        = maxValueText
     }
 }
-
-
-
 
 // -------------------------------
 // MARK: Colors
@@ -863,19 +855,19 @@ fileprivate class _GradientView: View {
     }
     #elseif os(OSX)
     override init(frame frameRect: NSRect) {
-    super.init(frame: frameRect)
-    setup()
+        super.init(frame: frameRect)
+        setup()
     }
     required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    setup()
+        super.init(coder: coder)
+        setup()
     }
     private func setup() {
-    wantsLayer = true
-    layerContentsRedrawPolicy = .onSetNeedsDisplay
+        wantsLayer = true
+        layerContentsRedrawPolicy = .onSetNeedsDisplay
     }
     fileprivate override func makeBackingLayer() -> CALayer {
-    return CAGradientLayer()
+        return CAGradientLayer()
     }
     #endif
 }
@@ -979,9 +971,6 @@ class RenderCycle {
         }
     }
 }
-
-
-
 
 // -------------------------------
 // MARK: Metal Graph
@@ -1120,16 +1109,16 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
     #elseif os(OSX)
 
     override fileprivate func makeBackingLayer() -> CALayer {
-    return CAMetalLayer()
+        return CAMetalLayer()
     }
 
     fileprivate override func layout() {
-    super.layout()
-    setNewScale(window?.backingScaleFactor ?? 1)
+        super.layout()
+        setNewScale(window?.backingScaleFactor ?? 1)
     }
 
     fileprivate override func viewDidMoveToWindow() {
-    setNewScale(window?.backingScaleFactor ?? 1)
+        setNewScale(window?.backingScaleFactor ?? 1)
     }
 
     #endif
