@@ -36,12 +36,10 @@ import simd
     fileprivate typealias Point      = CGPoint
     fileprivate typealias Rect       = CGRect
 
-
     extension Label {
         convenience init(labelWithString string: String) {
             self.init()
             text = string
-
         }
     }
 #elseif os(OSX)
@@ -99,7 +97,6 @@ import simd
 
 #endif
 
-
 // -------------------------------
 // MARK: Constants
 // -------------------------------
@@ -109,9 +106,6 @@ fileprivate struct Constants {
     static let TopBottomPadding : CGFloat = 16
     static let CornerRadius     : CGFloat = 10
 }
-
-
-
 
 // -------------------------------
 // MARK: Data Structures
@@ -166,14 +160,13 @@ public class GraphView: View {
     public var sampleColor = SampleColor.color(plain: .white) {
         didSet {
             switch sampleColor {
-            case .color(color):
+            case let .color(color):
                 metalGraph.uniforms.topColor    = color.vector()
                 metalGraph.uniforms.bottomColor = color.vector()
             case let .gradient(top, bottom):
                 metalGraph.uniforms.topColor    = top.vector()
                 metalGraph.uniforms.bottomColor = bottom.vector()
             }
-
 
             metalGraph.setNeedsDisplay()
         }
@@ -260,7 +253,7 @@ public class GraphView: View {
     /// to set this variable yourself, you should probably set `isAutoscaling` to false.
     public var visibleRange: ClosedRange<Float> {
         get {
-            return ClosedRange<Float>(uncheckedBounds: (metalGraph.uniforms.minValue, metalGraph.uniforms.maxValue))
+            return ClosedRange(uncheckedBounds: (metalGraph.uniforms.minValue, metalGraph.uniforms.maxValue))
         }
         set {
             guard newValue.upperBound > newValue.lowerBound else { return }
