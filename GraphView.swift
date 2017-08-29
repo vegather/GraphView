@@ -78,7 +78,20 @@ import simd
     }
 #endif
 
+#if swift(>=4.0)
 
+#else
+    extension MTLRenderCommandEncoder {
+        func setVertexBuffer(buffer: MTLBuffer, offset: Int, index: Int) {
+            setVertexBuffer(buffer, offset: offset, at: index)
+        }
+
+        func setVertexBufferOffset(_ offset: Int, index: Int) {
+            setVertexBufferOffset(offset, at: index)
+        }
+    }
+
+#endif
 
 
 // -------------------------------
@@ -1500,13 +1513,9 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         encoder.label = "Graph Encoder"
         encoder.setRenderPipelineState(pipeline)
 
-        #if swift(>=4.0)
-            encoder.setVertexBuffer(vertexBuffer,  offset: 0, index: 0)
-            encoder.setVertexBuffer(uniformBuffers[inflightBufferIndex], offset: 0, index: 1)
-        #else
-            encoder.setVertexBuffer(vertexBuffer,  offset: 0, at: 0)
-            encoder.setVertexBuffer(uniformBuffers[inflightBufferIndex], offset: 0, at: 1)
-        #endif
+        encoder.setVertexBuffer(vertexBuffer,  offset: 0, index: 0)
+        encoder.setVertexBuffer(uniformBuffers[inflightBufferIndex], offset: 0, index: 1)
+
         switch graphType {
         case .scatter:
             encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: samplesAdded)
@@ -1518,22 +1527,17 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
             //   drawPrimitives call. The result is that two lines are being drawn on top of each other.
             // - Perhaps the solution is to change the uniforms buffer, or even to have a separate
             //   uniforms buffer that is used when drawing as a line.
-            #if swift(>=4.0)
-                encoder.setVertexBufferOffset(MemoryLayout<Float>.size * Int(uniforms.offset), index: 0)
-            #else
-                encoder.setVertexBufferOffset(MemoryLayout<Float>.size * Int(uniforms.offset), at: 0)
-            #endif
+
+            encoder.setVertexBufferOffset(MemoryLayout<Float>.size * Int(uniforms.offset), index: 0)
+
             encoder.drawPrimitives(
                 type        : .lineStrip,
                 vertexStart : 0,
                 vertexCount : samplesAdded - Int(uniforms.offset)
             )
 
-            #if swift(>=4.0)
-                encoder.setVertexBufferOffset(0, index: 0)
-            #else
-                encoder.setVertexBufferOffset(0, at: 0)
-            #endif
+            encoder.setVertexBufferOffset(0, index: 0)
+
             encoder.drawPrimitives(
                 type        : .lineStrip,
                 vertexStart : 0,
@@ -1553,9 +1557,6 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         inflightBufferIndex = (inflightBufferIndex + 1) % numberOfInflightBuffers
     }
 
-
-
-
     // -------------------------------
     // MARK: Private Helpers
     // -------------------------------
@@ -1563,7 +1564,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
     private func refreshMin() {
         guard samplesAdded > 0 && isAutoscaling else { return }
 
-        var minimum = Float.greatestFiniteMagnitude
+        var minimum : Float = .greatestFiniteMagnitude
 
         if samplesAdded == 1 {
             minimum = vertices[0] - 1
