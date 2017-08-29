@@ -35,6 +35,15 @@ import simd
     fileprivate typealias BezierPath = UIBezierPath
     fileprivate typealias Point      = CGPoint
     fileprivate typealias Rect       = CGRect
+
+
+    extension Label {
+        convenience init(labelWithString string: String) {
+            self.init()
+            text = string
+
+        }
+    }
 #elseif os(OSX)
     import Cocoa
     public      typealias View       = NSView
@@ -48,6 +57,23 @@ import simd
     extension NSView {
         func setNeedsDisplay() {
             setNeedsDisplay(bounds)
+        }
+    }
+
+    extension NSTextField {
+        var text : String {
+            get {
+                return stringValue
+            }
+            set {
+                stringValue = newValue
+            }
+        }
+    }
+
+    extension CVDisplayLink {
+        func invalidate() {
+            CVDisplayLinkStop(self)
         }
     }
 #endif
@@ -142,22 +168,14 @@ public class GraphView: View {
     /// The title string that appears in the top left of the view
     public var title = "" {
         didSet {
-            #if os(iOS)
-                titleLabel.text = title
-            #elseif os(OSX)
-                titleLabel.stringValue = title
-            #endif
+            titleLabel.text = title
         }
     }
 
     /// The subtitle string that appears right under the title
     public var subtitle = "" {
         didSet {
-            #if os(iOS)
-                subtitleLabel.text = subtitle
-            #elseif os(OSX)
-                subtitleLabel.stringValue = subtitle
-            #endif
+            subtitleLabel.text = subtitle
         }
     }
 
@@ -442,18 +460,10 @@ public class GraphView: View {
         let maxValue = metalGraph.uniforms.maxValue
         let minValue = metalGraph.uniforms.minValue
         let midValue = Int32((Double(maxValue - minValue)/2 + Double(minValue)).rounded())
-        #if os(iOS)
-            maximumValueLabel = Label()
-            midValueLabel     = Label()
-            minimumValueLabel = Label()
-            maximumValueLabel.text = "\(maxValue)"
-            midValueLabel    .text = "\(midValue)"
-            minimumValueLabel.text = "\(minValue)"
-        #elseif os(OSX)
-            maximumValueLabel = Label(labelWithString: "\(maxValue)")
-            midValueLabel     = Label(labelWithString: "\(midValue)")
-            minimumValueLabel = Label(labelWithString: "\(minValue)")
-        #endif
+
+        maximumValueLabel = Label(labelWithString: "\(maxValue)")
+        midValueLabel     = Label(labelWithString: "\(midValue)")
+        minimumValueLabel = Label(labelWithString: "\(minValue)")
 
         addSubview(maximumValueLabel)
         addSubview(midValueLabel)
@@ -750,15 +760,9 @@ extension GraphView {
         let midValueText = String(format: "%.\(valueUnitDecimals)f", midValue) + " " + self.valueUnit
         let maxValueText = String(format: "%.\(valueUnitDecimals)f", maxValue) + " " + self.valueUnit
 
-        #if os(iOS)
-            self.minimumValueLabel.text        = minValueText
-            self.midValueLabel    .text        = midValueText
-            self.maximumValueLabel.text        = maxValueText
-        #elseif os(OSX)
-            self.minimumValueLabel.stringValue = minValueText
-            self.midValueLabel    .stringValue = midValueText
-            self.maximumValueLabel.stringValue = maxValueText
-        #endif
+        self.minimumValueLabel.text        = minValueText
+        self.midValueLabel    .text        = midValueText
+        self.maximumValueLabel.text        = maxValueText
     }
 }
 
@@ -915,14 +919,8 @@ class RenderCycle {
     }
 
     private func destroyDisplayLink() {
-        #if os(iOS)
-            displayLink?.invalidate()
-            displayLink = nil
-        #elseif os(OSX)
-            guard let displayLink = displayLink else { return }
-            CVDisplayLinkStop(displayLink)
-            self.displayLink = nil
-        #endif
+        displayLink?.invalidate()
+        displayLink = nil
     }
 
     @objc private func renderCycle() {
@@ -1811,8 +1809,6 @@ fileprivate class _HorizontalLinesView: View {
     }
 
 #endif
-
-
 
 
 // -------------------------------
