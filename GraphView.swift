@@ -97,6 +97,8 @@ import simd
 
 #endif
 
+
+
 // -------------------------------
 // MARK: Constants
 // -------------------------------
@@ -740,16 +742,11 @@ public class GraphView: View {
         public override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
             // True unless we find a finger on the auto-scale button
 
-            if let autoScaleButton = autoScaleButton {
-                for i in 0..<gestureRecognizer.numberOfTouches {
-                    let point = gestureRecognizer.location(ofTouch: i, in: self)
-                    if autoScaleButton.frame.contains(point) {
-                        return false
-                    }
-                }
+            guard let autoScaleButton = autoScaleButton else { return true }
+            return (0..<gestureRecognizer.numberOfTouches).contains {
+                let point = gestureRecognizer.location(ofTouch: $0, in: self)
+                return autoScaleButton.frame.contains(point)
             }
-
-            return true
         }
     }
 
@@ -1769,30 +1766,28 @@ fileprivate class _HorizontalLinesView: View {
             BezierPath(roundedRect: bounds, cornerRadius: 5).fill()
 
             // Get the context
-            if let context = UIGraphicsGetCurrentContext() {
+            guard let context = UIGraphicsGetCurrentContext() else { return }
 
-                // Prepare text attributes
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.alignment = .center
+            // Prepare text attributes
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
 
-                let attributes: [NSAttributedStringKey: Any] = [
-                    .font           : UIFont.systemFont(ofSize: fontSize, weight: .medium),
-                    .paragraphStyle : paragraphStyle
-                ]
-                let textSize = (text as NSString).size(withAttributes: attributes)
+            let attributes: [NSAttributedStringKey: Any] = [
+                .font           : UIFont.systemFont(ofSize: fontSize, weight: .medium),
+                .paragraphStyle : paragraphStyle
+            ]
+            let textSize = (text as NSString).size(withAttributes: attributes)
 
-                // Finding the rect to draw in, so the text is centered
-                var drawingRect = bounds
-                drawingRect.origin.y = bounds.height/2 - textSize.height/2
-                drawingRect.size.height = textSize.height
+            // Finding the rect to draw in, so the text is centered
+            var drawingRect = bounds
+            drawingRect.origin.y = bounds.height/2 - textSize.height/2
+            drawingRect.size.height = textSize.height
 
-                // Draw text
-                context.saveGState()
-                context.setBlendMode(.destinationOut)
-                (text as NSString).draw(in: drawingRect, withAttributes: attributes)
-                context.restoreGState()
-
-            }
+            // Draw text
+            context.saveGState()
+            context.setBlendMode(.destinationOut)
+            (text as NSString).draw(in: drawingRect, withAttributes: attributes)
+            context.restoreGState()
         }
     }
 
