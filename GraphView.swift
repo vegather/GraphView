@@ -97,7 +97,26 @@ import simd
 
 #endif
 
+struct Mutex {
+    private var _lock = pthread_mutex_t()
+    init() {
+        pthread_mutex_init(&_lock, nil)
+    }
 
+    mutating func lock() {
+        pthread_mutex_lock(&_lock)
+    }
+
+    mutating func unlock() {
+        pthread_mutex_unlock(&_lock)
+    }
+
+    mutating func with(_ closure: () -> ()) {
+        lock()
+        closure()
+        unlock()
+    }
+}
 
 // -------------------------------
 // MARK: Constants
@@ -883,7 +902,7 @@ class RenderCycle {
     static let shared = RenderCycle()
 
     private var observers = [WeakRenderCycleObserver]()
-    private var mutex = pthread_mutex_t()
+    private var mutex = Mutex()
 
     #if os(iOS)
     private var displayLink: CADisplayLink?
@@ -892,7 +911,7 @@ class RenderCycle {
     #endif
 
     private init() {
-        pthread_mutex_init(&mutex, nil)
+
     }
 
     private func initializeDisplayLink() {
@@ -930,34 +949,34 @@ class RenderCycle {
     @objc private func renderCycle() {
 
         DispatchQueue.main.async {
-            pthread_mutex_lock(&self.mutex)
-            self.observers.forEach { $0.value?.renderCycle() }
-            pthread_mutex_unlock(&self.mutex)
+            self.mutex.with {
+                self.observers.forEach { $0.value?.renderCycle() }
+            }
         }
     }
 
     fileprivate func add(cycleObserver: RenderCycleObserver) {
-        pthread_mutex_lock(&mutex)
-        observers.append(WeakRenderCycleObserver(value: cycleObserver))
+        mutex.with {
+            observers.append(WeakRenderCycleObserver(value: cycleObserver))
 
-        if observers.count == 1 {
-            // Just added the first observer
-            initializeDisplayLink()
+            if observers.count == 1 {
+                // Just added the first observer
+                initializeDisplayLink()
+            }
         }
-        pthread_mutex_unlock(&mutex)
     }
 
     fileprivate func remove(cycleObserver: RenderCycleObserver) {
-        pthread_mutex_lock(&mutex)
-        if let idx = observers.index(where: { $0.value === cycleObserver }) {
-            observers.remove(at: idx)
-        }
+        mutex.with {
+            if let idx = observers.index(where: { $0.value === cycleObserver }) {
+                observers.remove(at: idx)
+            }
 
-        if observers.count == 0 {
-            // Just removed the last observer
-            destroyDisplayLink()
+            if observers.count == 0 {
+                // Just removed the last observer
+                destroyDisplayLink()
+            }
         }
-        pthread_mutex_unlock(&mutex)
     }
 }
 
@@ -991,7 +1010,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
     private var verticesSemaphore: DispatchSemaphore!
     private var samplesAdded = 0
     private var needsRedraw = true
-    private var needsRedrawMutex = pthread_mutex_t()
+    private var needsRedrawMutex = Mutex()
     var uniforms: Uniforms!
     var graphType = GraphView.GraphType.scatter
 
@@ -1054,8 +1073,6 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
             wantsLayer = true
             layer?.isOpaque = false
         #endif
-
-        pthread_mutex_init(&needsRedrawMutex, nil)
 
         // Setup user data
         vertices = [Float](repeating: 0, count: Int(uniforms.capacity))
@@ -1129,26 +1146,11 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         setNeedsDisplay()
     }
 
-    #if os(iOS)
     fileprivate override func setNeedsDisplay() {
-        pthread_mutex_lock(&needsRedrawMutex)
-        needsRedraw = true
-        pthread_mutex_unlock(&needsRedrawMutex)
+        needsRedrawMutex.with { needsRedraw = true }
 
         super.setNeedsDisplay()
     }
-    #elseif os(OSX)
-    fileprivate override func setNeedsDisplay(_ invalidRect: NSRect) {
-    pthread_mutex_lock(&needsRedrawMutex)
-    needsRedraw = true
-    pthread_mutex_unlock(&needsRedrawMutex)
-
-    super.setNeedsDisplay(invalidRect)
-    }
-    #endif
-
-
-
 
     // -------------------------------
     // MARK: 🤘 Setup
@@ -1445,10 +1447,11 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
             window != nil
             else { return }
 
-        pthread_mutex_lock(&needsRedrawMutex)
-        let shouldDraw = needsRedraw
-        needsRedraw = false
-        pthread_mutex_unlock(&needsRedrawMutex)
+        var shouldDraw : Bool = false
+        needsRedrawMutex.with {
+            shouldDraw = needsRedraw
+            needsRedraw = false
+        }
 
         if shouldDraw {
             autoreleasepool { self.render() }
@@ -1573,10 +1576,6 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         uniforms.maxValue = maximum
     }
 }
-
-
-
-
 
 // -------------------------------
 // MARK: Accessories View
