@@ -486,9 +486,9 @@ public class GraphView: View {
         midValueLabel    .translatesAutoresizingMaskIntoConstraints = false
         minimumValueLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        maximumValueLabel.font = Font.systemFont(ofSize: 15)
-        midValueLabel    .font = Font.systemFont(ofSize: 15)
-        minimumValueLabel.font = Font.systemFont(ofSize: 15)
+        maximumValueLabel.font = .systemFont(ofSize: 15)
+        midValueLabel    .font = .systemFont(ofSize: 15)
+        minimumValueLabel.font = .systemFont(ofSize: 15)
 
         maximumValueLabel.textColor = Color(white: 1, alpha: 0.7)
         midValueLabel    .textColor = Color(white: 1, alpha: 0.7)
@@ -508,13 +508,11 @@ public class GraphView: View {
     }
 
     private func addTitleAndSubtitleLabels() {
+
+        titleLabel    = Label(labelWithString: title)
+        subtitleLabel = Label(labelWithString: subtitle)
+
         #if os(iOS)
-            titleLabel    = Label()
-            subtitleLabel = Label()
-
-            titleLabel   .text = title
-            subtitleLabel.text = subtitle
-
             titleLabel   .minimumScaleFactor = 0.1
             subtitleLabel.minimumScaleFactor = 0.1
 
@@ -522,9 +520,6 @@ public class GraphView: View {
             subtitleLabel.adjustsFontSizeToFitWidth = true
 
         #elseif os(OSX)
-            titleLabel    = Label(labelWithString: title)
-            subtitleLabel = Label(labelWithString: subtitle)
-
             titleLabel   .preferredMaxLayoutWidth = 1
             subtitleLabel.preferredMaxLayoutWidth = 1
         #endif
@@ -532,8 +527,8 @@ public class GraphView: View {
         titleLabel   .translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        titleLabel   .font = Font.systemFont(ofSize: 30)
-        subtitleLabel.font = Font.systemFont(ofSize: 20)
+        titleLabel   .font = .systemFont(ofSize: 30)
+        subtitleLabel.font = .systemFont(ofSize: 20)
 
         titleLabel   .textColor = Color(white: 1, alpha: 1)
         subtitleLabel.textColor = Color(white: 1, alpha: 0.6)
