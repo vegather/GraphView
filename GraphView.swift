@@ -21,19 +21,13 @@ import MetalKit
 import Accelerate
 import simd
 
-#if os(iOS)
-    import UIKit
-#elseif os(OSX)
-    import Cocoa
-#endif
-
-
 
 // -------------------------------
 // MARK: Platform Specific Types
 // -------------------------------
 
 #if os(iOS)
+    import UIKit
     public      typealias View       = UIView
     public      typealias Color      = UIColor
     fileprivate typealias Label      = UILabel
@@ -42,6 +36,7 @@ import simd
     fileprivate typealias Point      = CGPoint
     fileprivate typealias Rect       = CGRect
 #elseif os(OSX)
+    import Cocoa
     public      typealias View       = NSView
     public      typealias Color      = NSColor
     fileprivate typealias Label      = NSTextField
@@ -49,6 +44,12 @@ import simd
     fileprivate typealias BezierPath = NSBezierPath
     fileprivate typealias Point      = NSPoint
     fileprivate typealias Rect       = NSRect
+
+    extension NSView {
+        func setNeedsDisplay() {
+            setNeedsDisplay(bounds)
+        }
+    }
 #endif
 
 
@@ -120,19 +121,16 @@ public class GraphView: View {
     public var sampleColor = SampleColor.color(plain: .white) {
         didSet {
             switch sampleColor {
-            case .color(let color):
+            case .color(color):
                 metalGraph.uniforms.topColor    = color.vector()
                 metalGraph.uniforms.bottomColor = color.vector()
-            case .gradient(let top, let bottom):
+            case let .gradient(top, bottom):
                 metalGraph.uniforms.topColor    = top.vector()
                 metalGraph.uniforms.bottomColor = bottom.vector()
             }
 
-            #if os(iOS)
-                metalGraph.setNeedsDisplay()
-            #elseif os(OSX)
-                metalGraph.setNeedsDisplay(bounds)
-            #endif
+
+            metalGraph.setNeedsDisplay()
         }
     }
 
@@ -190,11 +188,7 @@ public class GraphView: View {
         didSet {
             metalGraph.graphType = graphType
 
-            #if os(iOS)
-                metalGraph.setNeedsDisplay()
-            #elseif os(OSX)
-                metalGraph.setNeedsDisplay(bounds)
-            #endif
+            metalGraph.setNeedsDisplay()
         }
     }
 
@@ -203,11 +197,7 @@ public class GraphView: View {
         didSet {
             metalGraph.uniforms.pointSize = sampleSize.size()
 
-            #if os(iOS)
-                metalGraph.setNeedsDisplay()
-            #elseif os(OSX)
-                metalGraph.setNeedsDisplay(bounds)
-            #endif
+            metalGraph.setNeedsDisplay()
         }
     }
 
@@ -241,12 +231,7 @@ public class GraphView: View {
             metalGraph.uniforms.maxValue = newValue.upperBound
             metalGraph.uniforms.minValue = newValue.lowerBound
 
-            #if os(iOS)
-                metalGraph.setNeedsDisplay()
-            #elseif os(OSX)
-                metalGraph.setNeedsDisplay(bounds)
-            #endif
-
+            metalGraph.setNeedsDisplay()
             updateMinMaxLabels()
         }
     }
@@ -1019,11 +1004,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
                 refreshMax()
                 verticesSemaphore.signal()
 
-                #if os(iOS)
-                    setNeedsDisplay()
-                #elseif os(OSX)
-                    setNeedsDisplay(bounds)
-                #endif
+                setNeedsDisplay()
             }
         }
     }
@@ -1114,11 +1095,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         let screen = window?.screen ?? UIScreen.main
         setNewScale(screen.scale)
 
-        #if os(iOS)
-            setNeedsDisplay()
-        #elseif os(OSX)
-            setNeedsDisplay(bounds)
-        #endif
+        setNeedsDisplay()
     }
 
     #elseif os(OSX)
@@ -1147,11 +1124,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
 
         metalLayer.drawableSize = drawableSize
 
-        #if os(iOS)
-            setNeedsDisplay()
-        #elseif os(OSX)
-            setNeedsDisplay(bounds)
-        #endif
+        setNeedsDisplay()
     }
 
     #if os(iOS)
@@ -1306,11 +1279,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         // Release the vertices array lock
         verticesSemaphore.signal()
 
-        #if os(iOS)
-            setNeedsDisplay()
-        #elseif os(OSX)
-            setNeedsDisplay(bounds)
-        #endif
+        setNeedsDisplay()
     }
 
     /// Replaces the entire vertices array with new data.
@@ -1346,11 +1315,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         for _ in 0..<3 { inflightBufferSemaphore.signal() }
         verticesSemaphore.signal()
 
-        #if os(iOS)
-            setNeedsDisplay()
-        #elseif os(OSX)
-            setNeedsDisplay(bounds)
-        #endif
+        setNeedsDisplay()
     }
 
     // Changes the size of the vertices array, and the vertex buffers.
@@ -1432,11 +1397,7 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
 
         verticesSemaphore.signal()
 
-        #if os(iOS)
-            setNeedsDisplay()
-        #elseif os(OSX)
-            setNeedsDisplay(bounds)
-        #endif
+        setNeedsDisplay()
     }
 
     func clear() {
@@ -1452,15 +1413,8 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
         uniforms.minValue = 0
         uniforms.maxValue = 1
 
-        #if os(iOS)
-            setNeedsDisplay()
-        #elseif os(OSX)
-            setNeedsDisplay(bounds)
-        #endif
+        setNeedsDisplay()
     }
-
-
-
 
     // -------------------------------
     // MARK: Drawing
