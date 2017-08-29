@@ -91,6 +91,12 @@ import simd
         }
     }
 
+    extension MTLDevice {
+        func makeDefaultLibrary() -> MTLLibrary? {
+            return newDefaultLibrary()
+        }
+    }
+
 #endif
 
 
@@ -1159,18 +1165,11 @@ fileprivate class _MetalGraphView: View, RenderCycleObserver {
     // -------------------------------
 
     private func setupPipeline() {
-        #if swift(>=4.0)
-            guard let library = device!.makeDefaultLibrary() else {
+        guard let library = device!.makeDefaultLibrary() else {
             Swift.print("❌ There doesn't appear to be a .metal file in your project")
             return
-            }
-        #else
-            guard let library = device!.newDefaultLibrary() else {
-                Swift.print("❌ There doesn't appear to be a .metal file in your project")
-                return
-            }
-        #endif
-        guard let vertexFunction   = library.makeFunction(name: "vertexShader")   else {
+        }
+        guard let vertexFunction = library.makeFunction(name: "vertexShader") else {
             Swift.print("❌ Make sure that the .metal file in your project contains a function called \"vertexShader\"")
             return
         }
